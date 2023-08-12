@@ -6,7 +6,9 @@
       <ul>
         <li v-for="stock in stockL" v-bind:key="stock.name">
           <div id="kospiL">
-            <h3 v-bind:text="stock.name">{{stock.name}}</h3>
+            <div id="stockNameBox"> 
+              <h3 v-bind:text="stock.name">{{stock.name}}</h3>
+            </div>
             <div id="stockPlusBox">
               <b-button id="stockPlus" @click="plusStock">추가</b-button>
             </div>
@@ -27,7 +29,7 @@ export default {
     },
     method :{
       plusStock() {
-        console.log(this.text)
+        
       }
     }
 };
@@ -41,15 +43,20 @@ export default {
   background-color: blue;
   justify-content : center;
   text-align: "center";
-  align-items : center;
+  align-items : "center";
 }
 #kospiL {
   background-color: red;
   margin-top : 10px;
-  display : flex
+  display : flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+#stockNameBox {
+  width: 80%;
 }
 #stockPlusBox {
-  justify-content: flex-right;
+  width: 20%;
 }
 h1 {
   text-align: "center";

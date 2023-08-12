@@ -1,5 +1,6 @@
 <template>
     <div id="header">
+        <h1>KosLetter</h1>
         <div id="mypage">
             <a href="http://localhost:8080/about">
                 <h2>닉네임</h2>

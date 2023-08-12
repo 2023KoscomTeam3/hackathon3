@@ -34,16 +34,16 @@ export default {
     data() {
         return {
             stockList : [
-                {id:1, name : "삼성전자"},
-                {id:2, name : "LG에너지솔루션"},
-                {id:3, name : "SK하이닉스"},
-                {id:4, name : "삼성바이오로직스"},
-                {id:5, name : "POSCO홀딩스"},
-                {id:6, name : "LG화학"},
-                {id:7, name : "삼성SDI"},
-                {id:8, name : "현대차"},
-                {id:9, name : "NAVER"},
-                {id:10, name : "포스코퓨처엠"},
+                {id:1, name : "삼성전자", logo : "../assets/samsung.png"},
+                {id:2, name : "LG에너지솔루션", logo : "../assets/lg.png"},
+                {id:3, name : "SK하이닉스", logo : "../assets/sk-hynix.png"},
+                {id:4, name : "삼성바이오로직스", logo : "../assets/samsung.png"},
+                {id:5, name : "POSCO홀딩스", logo : "../assets/posco.png"},
+                {id:6, name : "LG화학", logo : "../assets/lg.png"},
+                {id:7, name : "삼성SDI", logo : "../assets/samsung.png"},
+                {id:8, name : "현대차", logo : "../assets/hyundai.png"},
+                {id:9, name : "NAVER", logo : "../assets/naver.png"},
+                {id:10, name : "포스코퓨처엠", logo : "../assets/posco.png"},
             ],
         };
     },

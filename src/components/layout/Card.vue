@@ -66,10 +66,18 @@
 export default {
     name : "card",
     method : {
-      getData() {
-        this.$axios
-          .get()
-      }
+
+    },
+    created() {
+        console.log("startLoad")
+        this.$axios.get("http://3.38.94.77/api/main/my-stock-list")
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err =>   {
+                console.log(err);
+            })
+        console.log("endLoad")
     }
 };
 </script>
