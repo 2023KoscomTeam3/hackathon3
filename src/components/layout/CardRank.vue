@@ -29,7 +29,7 @@ export default {
     },
     method :{
       plusStock() {
-        
+        sessionStorage.setItem('')
       }
     }
 };
@@ -40,13 +40,13 @@ export default {
   height : 100%
 }
 #kospiT {
-  background-color: blue;
+  background-color: skyblue;
   justify-content : center;
   text-align: "center";
   align-items : "center";
 }
 #kospiL {
-  background-color: red;
+  background-color: #e5e3e1;
   margin-top : 10px;
   display : flex;
   justify-content: flex-start;

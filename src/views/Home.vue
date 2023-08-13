@@ -62,29 +62,9 @@ export default {
 #section1 {
     width: 50%;
     background-color : green;
+    float: left;
+    box-sizing: border-box;
     flex : 1
-}
-.box {
-    display: flex;
-    margin-top : 30px;
-    margin-left : 10px;
-    margin-right : 10px;
-    margin-bottom : 30px;
-}
-.c1 {
-    flex: 1;
-    box-sizing: border-box;
-    background-color : greenyellow
-}
-.c2 {
-    flex: 1;
-    box-sizing: border-box;
-    background-color : grey
-}
-.c3 {
-    flex: 1;
-    box-sizing: border-box;
-    background-color : gold
 }
 #section2 {
     width: 50%;

@@ -82,17 +82,12 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
     #myCard {
         height: 200px;
     }
-    #section1 {
-        float: left;
-        box-sizing: border-box;
-        background-color : green
-    }
     #padding {
-        height: 120px;
+        height: 10px;
     }
     #stockPhoto {
         background-color: white;
@@ -105,7 +100,7 @@ export default {
         height: 50px;
     }
     .box {
-        margin-top : 100px;
+        margin-top : 70px;
         margin-left : 10px;
         margin-right : 10px;
         margin-bottom : 30px;
@@ -120,7 +115,7 @@ export default {
         width : 33%;
         flex: 1;
         box-sizing: border-box;
-        background-color : greenyellow;
+        background-color : #F4F2EB;
         margin-left : 10px;
         margin-right : 10px;
         height: 200px;
