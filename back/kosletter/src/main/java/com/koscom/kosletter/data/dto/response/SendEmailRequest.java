@@ -1,4 +1,4 @@
-package com.koscom.kosletter.data.dto.request;
+package com.koscom.kosletter.data.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
