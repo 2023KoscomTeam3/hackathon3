@@ -14,12 +14,7 @@
 
 
 <script>
-// <div>
-//             <h1>Welcome to {{title}}!</h1>
-//             <input type="text" v-model="input1" />
-//             <button type="button" @click="getData">Get</button>
-//             <button type="button" @click="setData">Set</button>
-// </div>
+
 import Header from '../components/layout/Header.vue'
 import Card from '../components/layout/Card.vue'
 import CardRank from '../components/layout/CardRank.vue'

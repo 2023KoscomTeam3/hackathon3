@@ -3,10 +3,10 @@
         <Header />
         <div id="containerAbout">
             <div id="sec1">
-                
+                <SuccessRate />
             </div>
             <div id="sec2">
-
+                <History />
             </div>
             <div id="sec3">
                 
@@ -18,11 +18,15 @@
 
 <script>
 import Header from '../components/layout/Header.vue'
+import SuccessRate from '../components/layout/SuccessRate.vue'
+import History from '../components/layout/History.vue'
 
 export default {
-    name : 'Home',
+    name : 'About',
     components: {
         Header,
+        SuccessRate,
+        History
     },
     data() {
         return {
@@ -57,17 +61,13 @@ export default {
     flex-direction: row;
     justify-content: space-around;
     align-items: stretch;
-    flex: 1;
 }
 #sec1 {
     width: 33%;
     background-color : green;
-    flex : 1
 }
 #sec2 {
     width: 33%;
-    float: right;
-    padding : 10px;
     background-color: red;
 }
 #sec3 {
