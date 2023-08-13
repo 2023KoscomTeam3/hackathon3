@@ -1,12 +1,14 @@
 <template>
   <div class="login-container">
+    <img src= "../../assets/kosletter.png"/>
     <h2>Login</h2>
     <form @submit.prevent="login">
       <label for="username">Username:</label>
       <input type="text" id="username" v-model="username" required>
       <label for="password">Password:</label>
       <input type="password" id="password" v-model="password" required>
-      <button type="submit">Login</button>
+      <button type="submit" >Login</button>
+      <ChildComponent v-bind:username="username" />
     </form>
   </div>
 </template>
@@ -15,17 +17,22 @@
 export default {
   data() {
     return {
-      username: '',
-      password: '',
+      username: '1111',
+      password: '1111',
     };
   },
   methods: {
     login() {
       // 간단한 로그인 체크
-      if (this.username === 'user' && this.password === 'password') {
+      if (this.username === 'username' && this.password === 'password') {
         alert('Login successful!');
+         //페이지 이동
+       this.$router.push('../Home');
       } else {
         alert('Login failed. Please check your credentials.');
+         //페이지 이동
+       this.$router.push('../Home');
+       
       }
     },
   },
@@ -33,11 +40,17 @@ export default {
 </script>
 
 <style scoped>
+@font-face {
+    font-family: 'ChosunBg';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunBg.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 .login-container {
   width: 300px;
   margin: auto;
   padding: 20px;
-  border: 1px solid #ccc;
+  border: 1px solid #F4F2EB;
   border-radius: 5px;
 }
 form {
@@ -52,7 +65,7 @@ input {
   padding: 5px;
 }
 button {
-  background-color: #007bff;
+  background-color: #ED6C1D;
   color: white;
   border: none;
   padding: 10px;
