@@ -40,6 +40,9 @@ export default {
                 {id:9, name : "NAVER", logo : "../assets/naver.png"},
                 {id:10, name : "포스코퓨처엠", logo : "../assets/posco.png"},
             ],
+            myStockList : [
+                
+            ]
         };
     },
     methods : {
@@ -48,7 +51,18 @@ export default {
         },
         setData()   {
             this.input1 = "12345"
-        }
+        },
+    },
+    created() {
+            console.log("startLoad")
+            this.$axios.get("http://3.38.94.77/api/main/my-stock-list")
+                .then(res => {
+                    console.log(res);
+                })
+                .catch(err =>   {
+                    console.log(err);
+                })
+            console.log("endLoad")
     }
 };
 </script>
@@ -61,7 +75,6 @@ export default {
 }
 #section1 {
     width: 50%;
-    background-color : green;
     float: left;
     box-sizing: border-box;
     flex : 1

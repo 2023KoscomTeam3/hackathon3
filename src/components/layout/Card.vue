@@ -68,17 +68,17 @@ export default {
     method : {
 
     },
-    created() {
-        console.log("startLoad")
-        this.$axios.get("http://3.38.94.77/api/main/my-stock-list")
-            .then(res => {
-                console.log(res);
-            })
-            .catch(err =>   {
-                console.log(err);
-            })
-        console.log("endLoad")
-    }
+    // created() {
+    //     console.log("startLoad")
+    //     this.$axios.get("http://3.38.94.77/api/main/my-stock-list")
+    //         .then(res => {
+    //             console.log(res);
+    //         })
+    //         .catch(err =>   {
+    //             console.log(err);
+    //         })
+    //     console.log("endLoad")
+    // }
 };
 </script>
 
@@ -91,7 +91,7 @@ export default {
     }
     #stockPhoto {
         background-color: white;
-        height: 80px;
+        height: 50%;
     }
     #stockText {
         background-color: grey;
@@ -109,7 +109,6 @@ export default {
         justify-content: space-around;
         align-items: stretch;
         flex: 1;
-        background-color: yellow;
     }
     .c {
         width : 33%;

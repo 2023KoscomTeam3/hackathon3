@@ -4,13 +4,13 @@
         <h1>오늘 HOT 코스피 시가총액</h1>
       </div>
       <ul>
-        <li v-for="stock in stockL" v-bind:key="stock.name">
+        <li v-for="stock in stockL" v-bind:key="stock.id">
           <div id="kospiL">
             <div id="stockNameBox"> 
-              <h3 v-bind:text="stock.name">{{stock.name}}</h3>
+              <h3 v-bind:text="stock.name">{{stock.id}}. {{stock.name}}</h3>
             </div>
             <div id="stockPlusBox">
-              <b-button id="stockPlus" @click="plusStock">추가</b-button>
+              <b-button id="stockPlus" v-on:click="stockPlus" target="li">추가</b-button>
             </div>
           </div>
         </li>
@@ -24,14 +24,16 @@ export default {
     props : {
       stockL : Array
     },
+    methods : {
+      stockPlus() {
+        console.log('click')
+        // console.log(this.$event.target)
+        // console.log(this.stock.name)
+      }
+    },
     created() {
       console.log("CardRank")
     },
-    method :{
-      plusStock() {
-        sessionStorage.setItem('')
-      }
-    }
 };
 </script>
 
@@ -40,7 +42,6 @@ export default {
   height : 100%
 }
 #kospiT {
-  background-color: skyblue;
   justify-content : center;
   text-align: "center";
   align-items : "center";
@@ -48,15 +49,19 @@ export default {
 #kospiL {
   background-color: #e5e3e1;
   margin-top : 10px;
+  margin-right : 20px;
   display : flex;
   justify-content: flex-start;
   align-items: center;
+  padding : 5px;
 }
 #stockNameBox {
-  width: 80%;
+  margin-left: 5px;
+  width: 85%;
+  text-align: left;
 }
 #stockPlusBox {
-  width: 20%;
+  width: 15%;
 }
 h1 {
   text-align: "center";
