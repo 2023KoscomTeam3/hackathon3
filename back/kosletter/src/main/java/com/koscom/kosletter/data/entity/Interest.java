@@ -1,5 +1,6 @@
 package com.koscom.kosletter.data.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -24,7 +25,9 @@ public class Interest {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "stock_id")
-    private Stock stock;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "stock_id")
+//    private Stock stock;
+    @Column(name = "stock_id")
+    private long stock;
 }

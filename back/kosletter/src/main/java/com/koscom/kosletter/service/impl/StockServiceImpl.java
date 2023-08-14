@@ -8,7 +8,6 @@ import com.koscom.kosletter.data.entity.Interest;
 import com.koscom.kosletter.data.entity.Member;
 import com.koscom.kosletter.data.entity.Stock;
 import com.koscom.kosletter.data.repository.InterestRepository;
-import com.koscom.kosletter.data.repository.MemberRepository;
 import com.koscom.kosletter.data.repository.StockRepository;
 import com.koscom.kosletter.errors.code.InterestErrorCode;
 import com.koscom.kosletter.errors.code.StockErrorCode;
@@ -17,7 +16,6 @@ import com.koscom.kosletter.service.Common;
 import com.koscom.kosletter.service.StockService;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -83,21 +81,22 @@ public class StockServiceImpl implements StockService {
     @Override
     public void deleteMyStock(long memberId, long stockId) {
         log.info("[StockServiceImpl] 관식 종목 삭제");
-        if (interestRepository.existsByMember_IdAndStock_Id(memberId, stockId)) {
-            interestRepository.deleteByMember_IdAndStock_Id(memberId, stockId);
+        if (interestRepository.existsByMember_IdAndStock(memberId, stockId)) {
+            interestRepository.deleteByMember_IdAndStock(memberId, stockId);
         } else {
             throw new ErrorException(InterestErrorCode.INTEREST_NOT_FOUND);
         }
     }
 
     @Override
-    public void postMyStock(long memberId, long stockId) {
+    public void postMyStock(long memberId, String stockName) {
         log.info("[StockServiceImpl] 관식 종목 추가");
-        if (! interestRepository.existsByMember_IdAndStock_Id(memberId, stockId)) {
-            Stock stock = stockRepository.getById(stockId);
+        Stock stock = stockRepository.findByName(stockName);
+        log.info("stock {}", stock.getName() );
+        if (! interestRepository.existsByMember_IdAndStock(memberId, stock.getId())) {
             Member member = common.getMember(memberId);
             Interest interest = Interest.builder()
-                .stock(stock)
+                .stock(stock.getId())
                 .member(member)
                 .build();
 

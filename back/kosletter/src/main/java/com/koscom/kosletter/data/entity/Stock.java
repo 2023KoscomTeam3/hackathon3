@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,18 +17,18 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "top50_company")
 public class Stock {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(nullable = false)
+    @Column(name = "code")
     private String code;
-    @Column(nullable = false)
+    @Column(name = "company")
     private String name;
     @Column(nullable = false)
     private String picture;
     @Column
     private int price;
-    @Column
+    @Column(name = "last_update")
     private LocalDate date;
 }
