@@ -13,6 +13,8 @@ import com.koscom.kosletter.data.repository.DailyPriceRepository;
 import com.koscom.kosletter.data.repository.HistoryRepository;
 import com.koscom.kosletter.data.repository.MemberRepository;
 import com.koscom.kosletter.data.repository.StockRepository;
+import com.koscom.kosletter.errors.code.EmailErrorCode;
+import com.koscom.kosletter.errors.exception.ErrorException;
 import com.koscom.kosletter.service.Common;
 import com.koscom.kosletter.service.HistoryService;
 import java.time.LocalDate;
@@ -113,15 +115,17 @@ public class HistoryServiceImpl implements HistoryService {
         log.info("[HistoryServiceImpl] saveUp: {}, {}", memberId, stockCode);
         Member member = common.getMember(memberId);
         Stock stock = stockRepository.getByCode(stockCode);
-
-        History history = History.builder()
-            .member(member)
-            .stock(stock.getId())
-            .vote(1)
-            .date(LocalDate.now())
-            .build();
-
-        historyRepository.save(history);
+        if(!historyRepository.existsByMember_IdAndStockAndDate(memberId, stock.getId(), LocalDate.now())) {
+            History history = History.builder()
+                .member(member)
+                .stock(stock.getId())
+                .vote(1)
+                .date(LocalDate.now())
+                .build();
+            historyRepository.save(history);
+        } else {
+            throw new ErrorException(EmailErrorCode.EMAIL_CONFLICT);
+        }
     }
 
     @Override
@@ -130,14 +134,18 @@ public class HistoryServiceImpl implements HistoryService {
         Member member = common.getMember(memberId);
         Stock stock = stockRepository.getByCode(stockCode);
 
-        History history = History.builder()
-            .member(member)
-            .stock(stock.getId())
-            .vote(0)
-            .date(LocalDate.now())
-            .build();
-
-        historyRepository.save(history);
+        if(!historyRepository.existsByMember_IdAndStockAndDate(memberId, stock.getId(), LocalDate.now())) {
+            History history = History.builder()
+                .member(member)
+                .stock(stock.getId())
+                .vote(0)
+                .date(LocalDate.now())
+                .build();
+    
+            historyRepository.save(history);
+        } else {
+            throw new ErrorException(EmailErrorCode.EMAIL_CONFLICT);
+        }
     }
 
     @Scheduled(cron = "0 0 16 * * *")

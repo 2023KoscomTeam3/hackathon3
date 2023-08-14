@@ -20,10 +20,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,9 +40,9 @@ public class MailServiceImpl implements MailService {
 
         message.addRecipients(RecipientType.TO, request.getEmail());
         message.setSubject("제목");
-        String upUrl = "http://localhost:8080/api/mypage/up/" +
+        String upUrl = "http://ec2-3-38-94-77.ap-northeast-2.compute.amazonaws.com/api/mypage/up/" +
             request.getMemberId() + "/" + request.getStockCode();
-        String downUrl = "http://localhost:8080/api/mypage/down/" +
+        String downUrl = "http://ec2-3-38-94-77.ap-northeast-2.compute.amazonaws.com/api/mypage/down/" +
             request.getMemberId() + "/" + request.getStockCode();
         String msgg = "";
         msgg+= "<div style='margin:20px;'>";

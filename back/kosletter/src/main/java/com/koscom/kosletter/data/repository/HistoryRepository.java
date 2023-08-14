@@ -18,4 +18,6 @@ public interface HistoryRepository extends JpaRepository<History, Long> {
     List<History> getByDateAndCorrect(LocalDate date, int correct);
 
     List<History> getByMember_Id(long id);
+    boolean existsByMember_IdAndStockAndDate(long memberId, long stockId, LocalDate date);
+  
 }
