@@ -4,13 +4,13 @@
         <h1>오늘 HOT 코스피 시가총액</h1>
       </div>
       <ul>
-        <li v-for="stock in stockL" v-bind:key="stock.id">
+        <li v-for="(stock, index) in stockL" v-bind:key="stock.id">
           <div id="kospiL">
             <div id="stockNameBox"> 
-              <h3 v-bind:text="stock.name">{{stock.id}}. {{stock.name}}</h3>
+              <h3 v-bind:text="stock.name">{{ index+1 }} .  {{stock.name}}</h3>
             </div>
             <div id="stockPlusBox">
-              <b-button id="stockPlus" v-on:click="stockPlus" target="li">추가</b-button>
+              <b-button id="stockPlus" @click="stockPlus">추가</b-button>
             </div>
           </div>
         </li>
@@ -27,8 +27,8 @@ export default {
     methods : {
       stockPlus() {
         console.log('click')
-        // console.log(this.$event.target)
-        // console.log(this.stock.name)
+        console.log(this.$el)
+        // console.log(this.stock.name) 
       }
     },
     created() {
@@ -38,6 +38,15 @@ export default {
 </script>
 
 <style>
+@font-face {
+  font-family: 'ChosunBg';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunBg.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+* {
+font-family: 'ChosunBg' !important;
+}
 #cardGroup {
   height : 100%
 }

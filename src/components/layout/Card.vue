@@ -2,7 +2,15 @@
     <div>
         <div id="padding"> </div>
         <div class="box">
-            <div class="c"> 
+            <div id="c1" class="c"> 
+                <div id="stockPhoto">
+                </div>
+                <div id="stockText">
+                    <h3>삼성전자</h3>
+                </div>
+                <b-button>삭제</b-button>
+            </div>
+            <div id="c2" class="c"> 
                 <div id="stockPhoto">
 
                 </div>
@@ -11,16 +19,7 @@
                 </div>
                 <b-button>삭제</b-button>
             </div>
-            <div class="c"> 
-                <div id="stockPhoto">
-
-                </div>
-                <div id="stockText">
-
-                </div>
-                <b-button>삭제</b-button>
-            </div>
-            <div class="c"> 
+            <div id="c3" class="c"> 
                 <div id="stockPhoto">
 
                 </div>
@@ -31,7 +30,7 @@
             </div>
         </div>
         <div class="box">
-            <div class="c"> 
+            <div id="c4" class="c"> 
                 <div id="stockPhoto">
 
                 </div>
@@ -40,7 +39,7 @@
                 </div>
                 <b-button>삭제</b-button>
             </div>
-            <div class="c"> 
+            <div id="c5" class="c"> 
                 <div id="stockPhoto">
 
                 </div>
@@ -49,7 +48,7 @@
                 </div>
                 <b-button>삭제</b-button>
             </div>
-            <div class="c"> 
+            <div id="c6" class="c"> 
                 <div id="stockPhoto">
 
                 </div>
@@ -126,5 +125,11 @@ export default {
     #c {
         height :100;
         background-color : #2c3e50
+    }
+    #stockPhoto {
+        background-image: url('../../assets/logo/samsung.png');
+        background-repeat: no-repeat;
+        background-size: contain; 
+        background-position: center; 
     }
 </style>

@@ -14,7 +14,6 @@
 
 
 <script>
-
 import Header from '../components/layout/Header.vue'
 import Card from '../components/layout/Card.vue'
 import CardRank from '../components/layout/CardRank.vue'
@@ -51,11 +50,12 @@ export default {
         },
         setData()   {
             this.input1 = "12345"
+            this.member = "shkim"
         },
     },
     created() {
             console.log("startLoad")
-            this.$axios.get("http://3.38.94.77/api/main/my-stock-list")
+            this.$axios.get("http://ec2-3-38-94-77.ap-northeast-2.compute.amazonaws.com/api/main/my-stock-list/" + "?memberId=member")
                 .then(res => {
                     console.log(res);
                 })
@@ -68,6 +68,12 @@ export default {
 </script>
 
 <style>
+@font-face {
+    font-family: 'ChosunBg';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunBg.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 #container {
     width: 100%;
     height: 100%;
