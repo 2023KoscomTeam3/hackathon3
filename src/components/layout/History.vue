@@ -7,8 +7,10 @@
             <li v-for="his in this.history_List" v-bind:key="his.name">
                 <div id="hisTextBox">
                     <h5>{{his.name}}</h5>
-                    <h5>{{his.result}}</h5>
-                    <h5>{{his.date}}</h5>
+                    <div>
+                        <h5>{{his.result}}</h5>
+                        <h8>{{his.date}}</h8>
+                    </div>
                 </div>
             </li>
         </div>
@@ -25,7 +27,6 @@ export default {
                 {name: "삼성전자", result: "성공", date:'2023.08.01' },
                 {name: "삼성전자", result: "성공", date:'2023.08.01' },
                 {name: "삼성전자", result: "성공", date:'2023.08.01' },
-                {name: "삼성전자", result: "성공", date:'2023.08.01' },
             ]
         };
     },
@@ -38,25 +39,34 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
     #hisContainer { 
         padding-top: 50px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
     }
     #hisTitle {
         background-color: white;
     }
     #hisBox {
         height: 500px;
-        width : 300px;
-        background-color: blue;
+        width: 330px;
         margin-bottom: 50px;
+        padding: 5px;
     }
     #hisTextBox {
-        height: 50px;
-        margin-top: 5px;
+        height: 70px;
+        margin-top: 10px;
         margin-left: 5px;
         margin-right: 5px;
-        background-color: aqua;
+        background-color: #E5E3E1;
         display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    li{
+        list-style:none;
     }
 </style>

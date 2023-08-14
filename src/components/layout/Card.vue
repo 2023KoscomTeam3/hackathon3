@@ -68,35 +68,30 @@ export default {
     method : {
 
     },
-    created() {
-        console.log("startLoad")
-        this.$axios.get("http://3.38.94.77/api/main/my-stock-list")
-            .then(res => {
-                console.log(res);
-            })
-            .catch(err =>   {
-                console.log(err);
-            })
-        console.log("endLoad")
-    }
+    // created() {
+    //     console.log("startLoad")
+    //     this.$axios.get("http://3.38.94.77/api/main/my-stock-list")
+    //         .then(res => {
+    //             console.log(res);
+    //         })
+    //         .catch(err =>   {
+    //             console.log(err);
+    //         })
+    //     console.log("endLoad")
+    // }
 };
 </script>
 
-<style>
+<style scoped>
     #myCard {
         height: 200px;
     }
-    #section1 {
-        float: left;
-        box-sizing: border-box;
-        background-color : green
-    }
     #padding {
-        height: 120px;
+        height: 10px;
     }
     #stockPhoto {
         background-color: white;
-        height: 80px;
+        height: 50%;
     }
     #stockText {
         background-color: grey;
@@ -105,7 +100,7 @@ export default {
         height: 50px;
     }
     .box {
-        margin-top : 100px;
+        margin-top : 70px;
         margin-left : 10px;
         margin-right : 10px;
         margin-bottom : 30px;
@@ -114,13 +109,12 @@ export default {
         justify-content: space-around;
         align-items: stretch;
         flex: 1;
-        background-color: yellow;
     }
     .c {
         width : 33%;
         flex: 1;
         box-sizing: border-box;
-        background-color : greenyellow;
+        background-color : #F4F2EB;
         margin-left : 10px;
         margin-right : 10px;
         height: 200px;

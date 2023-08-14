@@ -9,7 +9,7 @@
                 <History />
             </div>
             <div id="sec3">
-                
+                <Rabbit />
             </div>
         </div>
     </div>
@@ -20,13 +20,15 @@
 import Header from '../components/layout/Header.vue'
 import SuccessRate from '../components/layout/SuccessRate.vue'
 import History from '../components/layout/History.vue'
+import Rabbit from '../components/layout/Rabbit.vue'
 
 export default {
     name : 'About',
     components: {
         Header,
         SuccessRate,
-        History
+        History,
+        Rabbit,
     },
     data() {
         return {
@@ -63,15 +65,12 @@ export default {
     align-items: stretch;
 }
 #sec1 {
-    width: 33%;
-    background-color : green;
+    width: 30%;
 }
 #sec2 {
-    width: 33%;
-    background-color: red;
+    width: 40%;
 }
 #sec3 {
-    width: 33%;
-    background-color : yellow;
+    width: 30%;
 }
 </style>
