@@ -10,10 +10,9 @@ import org.springframework.data.repository.query.Param;
 
 public interface StockRepository extends JpaRepository<Stock, Long> {
     @Query("select "
-        + "new com.koscom.kosletter.data.dto.response.InterestStock(s.id, s.name, s.picture, n.title) "
+        + "new com.koscom.kosletter.data.dto.response.InterestStock(s.id, s.name, s.picture) "
         + "from Interest i "
         + "left join fetch Stock s on i.stock = s.id "
-        + "left join fetch News n on s.code = n.code "
         + "where i.member = :member")
     List<InterestStock> getInterestStock(@Param("member") Member member);
 

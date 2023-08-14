@@ -11,6 +11,7 @@ import com.koscom.kosletter.data.repository.MemberRepository;
 import com.koscom.kosletter.data.repository.StockRepository;
 import com.koscom.kosletter.errors.code.MemberErrorCode;
 import com.koscom.kosletter.errors.exception.ErrorException;
+import com.koscom.kosletter.service.MailService;
 import com.koscom.kosletter.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     private final StockRepository stockRepository;
     private final InterestRepository interestRepository;
+    private final MailService mailService;
 
     @Override
     public void signUp(MemberCreateRequest memberRequest) {
@@ -55,8 +57,10 @@ public class MemberServiceImpl implements MemberService {
 
         MemberIdResponse memberId = MemberIdResponse.builder()
             .memberId(member.getId())
+            .coin(member.getCoin())
             .build();
 
+        mailService.sendMail();
         log.info("MemberServiceImpl log-in 완료 : {}", memberId.getMemberId());
         return memberId;
     }

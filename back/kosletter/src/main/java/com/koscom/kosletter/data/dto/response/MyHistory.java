@@ -9,6 +9,6 @@ import lombok.Getter;
 public class MyHistory {
     private long historyId;
     private String stockName;
-    private boolean correctness;
+    private String correctness;
     private LocalDate date;
 }

@@ -66,7 +66,6 @@ public class StockServiceImpl implements StockService {
                 .stockId(s.getStockId())
                 .name(s.getName())
                 .picture(s.getPicture())
-                .title(s.getTitle())
                 .build();
             interests.add(interestStock);
         }

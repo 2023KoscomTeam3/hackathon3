@@ -5,9 +5,11 @@ import com.koscom.kosletter.data.dto.response.MyHistoryListResponse;
 import com.koscom.kosletter.data.dto.response.RankListResponse;
 import com.koscom.kosletter.data.dto.response.Ranking;
 import com.koscom.kosletter.data.dto.response.SuccessRateResponse;
+import com.koscom.kosletter.data.entity.DailyPrice;
 import com.koscom.kosletter.data.entity.History;
 import com.koscom.kosletter.data.entity.Member;
 import com.koscom.kosletter.data.entity.Stock;
+import com.koscom.kosletter.data.repository.DailyPriceRepository;
 import com.koscom.kosletter.data.repository.HistoryRepository;
 import com.koscom.kosletter.data.repository.MemberRepository;
 import com.koscom.kosletter.data.repository.StockRepository;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +34,7 @@ public class HistoryServiceImpl implements HistoryService {
     private final Common common;
     private final MemberRepository memberRepository;
     private final StockRepository stockRepository;
+    private final DailyPriceRepository dailyPriceRepository;
 
     @Override
     public SuccessRateResponse getSuccessRate(long memberId) {
@@ -60,10 +64,19 @@ public class HistoryServiceImpl implements HistoryService {
 
         for (var h:histories) {
             Stock stock = stockRepository.getById(h.getStock());
+            String correct = "";
+            if(h.getCorrect() == 0) {
+                correct = "판별 전";
+            } else if (h.getCorrect() == 1) {
+                correct = "오답";
+            } else if (h.getCorrect() == 2) {
+                correct = "정답";
+            }
+
             MyHistory history = MyHistory.builder()
                 .historyId(h.getId())
                 .stockName(stock.getName())
-                .correctness(h.isCorrectness())
+                .correctness(correct)
                 .date(h.getDate())
                 .build();
 
@@ -127,8 +140,35 @@ public class HistoryServiceImpl implements HistoryService {
         historyRepository.save(history);
     }
 
-    private void doJudgement() {
+    @Scheduled(cron = "0 0 16 * * *")
+    public void doJudgement() {
         log.info("[HistoryImpl] doJudgement");
+        List<History> histories = historyRepository.getByDateAndCorrect(LocalDate.now().minusDays(1), 0);
+
+        if (histories != null || !histories.isEmpty()) {
+            for (var h:histories) {
+                String company = stockRepository.getById(h.getStock()).getName();
+                log.info("company name {}", company);
+                List<DailyPrice> dailyPrices = dailyPriceRepository.findTop2ByCompanyOrderByDateDesc(company);
+                if(dailyPrices.get(0).getDate().compareTo(LocalDate.now()) == 0) {
+                    if(dailyPrices.get(0).getClose() > dailyPrices.get(1).getClose()) {
+                        if(h.getVote() == 1) {
+                            h.setCorrect(2);
+                            h.getMember().setCoin(h.getMember().getCoin() + 10);
+                        } else if (h.getVote() == 0) {
+                            h.setCorrect(1);
+                        }
+                    } else if (dailyPrices.get(0).getClose() <= dailyPrices.get(1).getClose()) {
+                        if(h.getVote() == 1) {
+                            h.setCorrect(1);
+                        } else if (h.getVote() == 0) {
+                            h.setCorrect(2);
+                            h.getMember().setCoin(h.getMember().getCoin() + 10);
+                        }
+                    }
+                }
+            }
+        }
 
     }
 
