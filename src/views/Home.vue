@@ -57,7 +57,11 @@ export default {
             console.log("startLoad")
             this.$axios.get("http://3.38.94.77/api/main/my-stock-list" + "?memberId=1")
                 .then(res => {
-                    console.log(res);
+                    console.log(res.data)
+                    console.log(res.data.myStockList);
+                    this.myStockList = res.data.myStockList;
+                    console.log(this.myStockList.length)
+                    console.log(this.myStockList[0].name)
                 })
                 .catch(err =>   {
                     console.log(err);
@@ -66,6 +70,7 @@ export default {
     }
 };
 </script>
+
 
 <style>
 @font-face {
@@ -77,6 +82,7 @@ export default {
 #container {
     width: 100%;
     height: 100%;
+    border-radius: 10px;
     background-color : red
 }
 #section1 {
@@ -92,3 +98,4 @@ export default {
     padding : 10px;
 }
 </style>
+

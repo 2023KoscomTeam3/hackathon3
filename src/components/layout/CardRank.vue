@@ -38,6 +38,7 @@ export default {
 };
 </script>
 
+
 <style>
 @font-face {
     font-family: 'ChosunBg';
@@ -64,6 +65,7 @@ export default {
   justify-content: flex-start;
   align-items: center;
   padding : 5px;
+  border-radius: 10px;
 }
 #stockNameBox {
   margin-left: 5px;
@@ -71,6 +73,7 @@ export default {
   text-align: left;
 }
 #stockPlusBox {
+  background-color: #E5E3E1;
   width: 15%;
 }
 h1 {
@@ -79,5 +82,18 @@ h1 {
 }
 ul{
   list-style:none;
+}
+#stockPlus{
+  background-color : #ED6C1D
+}
+#all{
+  background-color: #F4F2EB
+}
+#alls{
+  background-color: #FFFFFF;
+  margin: 20px ;
+  padding: 10px;
+  border-radius: 10px;
+  
 }
 </style>
