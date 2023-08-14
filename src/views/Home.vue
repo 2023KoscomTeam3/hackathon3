@@ -55,7 +55,7 @@ export default {
     },
     created() {
             console.log("startLoad")
-            this.$axios.get("http://3.38.94.77/api/main/my-stock-list")
+            this.$axios.get("http://3.38.94.77/api/main/my-stock-list" + "?memberId=1")
                 .then(res => {
                     console.log(res);
                 })

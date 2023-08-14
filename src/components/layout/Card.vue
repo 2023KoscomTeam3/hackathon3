@@ -6,7 +6,7 @@
         </div>
         <div class="box">
             <div class="c"> 
-                <div class="stockPhoto">
+                <div class="stockPhoto" id="p1">
 
                 </div>
                 <div id="stockText">
@@ -15,7 +15,7 @@
                 <b-button>삭제</b-button>
             </div>
             <div class="c"> 
-                <div class="stockPhoto">
+                <div class="stockPhoto" id="p2">
 
                 </div>
                 <div id="stockText">
@@ -136,9 +136,14 @@ export default {
     .stockPhoto {
         background-color: white;
         height: 50%;
-        background-image: url('../../assets/logo/samsung.png');
         background-repeat: no-repeat;
         background-size: contain; 
         background-position: center; 
+    }
+    #p1 {
+        background-image: url('../../assets/logo/LG.png');
+    }
+    #p2 {
+        background-image: url('../../assets/logo/sk-hynix.png');
     }
 </style>
