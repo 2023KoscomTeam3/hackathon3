@@ -29,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class MailServiceImpl implements MailService, ApplicationListener<ContextRefreshedEvent> {
+public class MailServiceImpl implements MailService {
     private final JavaMailSender mailSender;
     private final InterestRepository interestRepository;
     private final NewsRepository newsRepository;
@@ -109,8 +109,7 @@ public class MailServiceImpl implements MailService, ApplicationListener<Context
         }
     }
 
-    @Override
-    public void onApplicationEvent(ContextRefreshedEvent event) {
+    public void send() {
         sendMail();
     }
 }

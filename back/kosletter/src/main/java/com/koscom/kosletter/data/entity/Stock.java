@@ -27,8 +27,6 @@ public class Stock {
     private String name;
     @Column(nullable = false)
     private String picture;
-    @Column
-    private int price;
     @Column(name = "last_update")
     private LocalDate date;
 }
