@@ -12,8 +12,11 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
     @Query("select "
         + "new com.koscom.kosletter.data.dto.response.InterestStock(s.id, s.name, s.picture, n.title) "
         + "from Interest i "
-        + "left join fetch Stock s on i.stock.id = s.id "
-        + "left join fetch News n on s.name = n.stockName "
+        + "left join fetch Stock s on i.stock = s.id "
+        + "left join fetch News n on s.code = n.code "
         + "where i.member = :member")
     List<InterestStock> getInterestStock(@Param("member") Member member);
+
+    Stock getByCode(String stockCode);
+    Stock findByName(String stockName);
 }

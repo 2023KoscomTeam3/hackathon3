@@ -7,17 +7,22 @@ import com.koscom.kosletter.data.dto.response.Ranking;
 import com.koscom.kosletter.data.dto.response.SuccessRateResponse;
 import com.koscom.kosletter.data.entity.History;
 import com.koscom.kosletter.data.entity.Member;
+import com.koscom.kosletter.data.entity.Stock;
 import com.koscom.kosletter.data.repository.HistoryRepository;
 import com.koscom.kosletter.data.repository.MemberRepository;
+import com.koscom.kosletter.data.repository.StockRepository;
 import com.koscom.kosletter.service.Common;
 import com.koscom.kosletter.service.HistoryService;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -25,6 +30,7 @@ public class HistoryServiceImpl implements HistoryService {
     private final HistoryRepository historyRepository;
     private final Common common;
     private final MemberRepository memberRepository;
+    private final StockRepository stockRepository;
 
     @Override
     public SuccessRateResponse getSuccessRate(long memberId) {
@@ -53,9 +59,10 @@ public class HistoryServiceImpl implements HistoryService {
         List<MyHistory> myHistories = new ArrayList<>();
 
         for (var h:histories) {
+            Stock stock = stockRepository.getById(h.getStock());
             MyHistory history = MyHistory.builder()
                 .historyId(h.getId())
-                .stockName(h.getStock().getName())
+                .stockName(stock.getName())
                 .correctness(h.isCorrectness())
                 .date(h.getDate())
                 .build();
@@ -87,4 +94,43 @@ public class HistoryServiceImpl implements HistoryService {
 
         return response;
     }
+
+    @Override
+    public void saveUp(long memberId, String stockCode) {
+        log.info("[HistoryServiceImpl] saveUp: {}, {}", memberId, stockCode);
+        Member member = common.getMember(memberId);
+        Stock stock = stockRepository.getByCode(stockCode);
+
+        History history = History.builder()
+            .member(member)
+            .stock(stock.getId())
+            .vote(1)
+            .date(LocalDate.now())
+            .build();
+
+        historyRepository.save(history);
+    }
+
+    @Override
+    public void saveDown(long memberId, String stockCode) {
+        log.info("[HistoryServiceImpl] saveDown: {}, {}", memberId, stockCode);
+        Member member = common.getMember(memberId);
+        Stock stock = stockRepository.getByCode(stockCode);
+
+        History history = History.builder()
+            .member(member)
+            .stock(stock.getId())
+            .vote(0)
+            .date(LocalDate.now())
+            .build();
+
+        historyRepository.save(history);
+    }
+
+    private void doJudgement() {
+        log.info("[HistoryImpl] doJudgement");
+
+    }
+
+
 }

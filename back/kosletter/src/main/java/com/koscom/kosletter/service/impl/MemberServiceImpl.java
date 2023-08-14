@@ -41,7 +41,7 @@ public class MemberServiceImpl implements MemberService {
 
         Interest interest = Interest.builder()
             .member(member)
-            .stock(stock)
+            .stock(stock.getId())
             .build();
         interestRepository.save(interest);
         log.info("MemberServiceImpl sign-up 완료");

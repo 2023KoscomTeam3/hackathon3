@@ -7,5 +7,5 @@ public interface StockService {
     StockListResponse getStockList();
     InterestStockListResponse getInterestStockList(long memberId);
     void deleteMyStock(long memberId, long stockId);
-    void postMyStock(long memberId, long stockId);
+    void postMyStock(long memberId, String stockId);
 }

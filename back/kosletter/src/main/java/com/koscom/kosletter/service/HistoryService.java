@@ -11,4 +11,8 @@ public interface HistoryService {
     MyHistoryListResponse getHistory(long memberId);
 
     RankListResponse getRanking();
+
+    void saveUp(long memberId, String stockCode);
+
+    void saveDown(long memberId, String stockCode);
 }

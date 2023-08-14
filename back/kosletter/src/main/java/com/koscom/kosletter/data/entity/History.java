@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Getter
@@ -29,10 +30,15 @@ public class History {
     private LocalDate date;
     @Column(columnDefinition="tinyint(1)")
     private boolean correctness;
+    //맞으면 2, 틀리면 1
+    @ColumnDefault("0")
+    private int correct;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "stock_id")
-    private Stock stock;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "stock_id")
+//    private Stock stock;
+    @Column(name = "stock_id")
+    private long stock;
 }

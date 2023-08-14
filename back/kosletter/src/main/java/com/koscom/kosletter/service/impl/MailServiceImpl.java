@@ -3,8 +3,10 @@ package com.koscom.kosletter.service.impl;
 import com.koscom.kosletter.data.dto.response.SendEmailRequest;
 import com.koscom.kosletter.data.entity.Interest;
 import com.koscom.kosletter.data.entity.News;
+import com.koscom.kosletter.data.entity.Stock;
 import com.koscom.kosletter.data.repository.InterestRepository;
 import com.koscom.kosletter.data.repository.NewsRepository;
+import com.koscom.kosletter.data.repository.StockRepository;
 import com.koscom.kosletter.errors.code.EmailErrorCode;
 import com.koscom.kosletter.errors.exception.ErrorException;
 import com.koscom.kosletter.service.MailService;
@@ -31,6 +33,7 @@ public class MailServiceImpl implements MailService, ApplicationListener<Context
     private final JavaMailSender mailSender;
     private final InterestRepository interestRepository;
     private final NewsRepository newsRepository;
+    private final StockRepository stockRepository;
 
     private MimeMessage createMessage(SendEmailRequest request) throws MessagingException, UnsupportedEncodingException {
         log.info("[MailServiceImpl] createMessage");
@@ -38,7 +41,10 @@ public class MailServiceImpl implements MailService, ApplicationListener<Context
 
         message.addRecipients(RecipientType.TO, request.getEmail());
         message.setSubject("제목");
-
+        String upUrl = "http://localhost:8080/api/mypage/up/" +
+            request.getMemberId() + "/" + request.getStockCode();
+        String downUrl = "http://localhost:8080/api/mypage/down/" +
+            request.getMemberId() + "/" + request.getStockCode();
         String msgg = "";
         msgg+= "<div style='margin:20px;'>";
         msgg+= "<h1> 안녕하세요 ";
@@ -52,6 +58,8 @@ public class MailServiceImpl implements MailService, ApplicationListener<Context
         msgg+= "<p>감사합니다.<p>";
         msgg+= "<br>";
         msgg+= "<div align='center' style='border:1px solid black; font-family:verdana';>";
+        msgg+= "<a href=" + upUrl + ">" + "<button> 오른다 </button>" + "</a>";
+        msgg+= "<a href=" + downUrl + ">" + "<button> 내려간다 </button>" + "</a>";
         msgg+= "<div style='font-size:130%'>";
         msgg+= "</div>";
         message.setText(msgg, "utf-8", "html");//내용
@@ -66,16 +74,21 @@ public class MailServiceImpl implements MailService, ApplicationListener<Context
         List<SendEmailRequest> requests = new ArrayList<>();
         if(interests != null || !interests.isEmpty()) {
             for (var i:interests) {
-                String stockName = i.getStock().getName();
-                List<News> news = newsRepository.findByStockName(stockName);
+                log.info("id {}", i.getStock());
+                long stockId = i.getStock();
+                Stock stock = stockRepository.getById(stockId);
+                log.info("stock {}", stock.getCode());
+                List<News> news = newsRepository.findByCode(stock.getCode());
                 for (var n:news) {
                     SendEmailRequest emailRequest = SendEmailRequest.builder()
+                        .memberId(i.getMember().getId())
                         .email(i.getMember().getEmail())
                         .name(i.getMember().getNickname())
-                        .stockName(stockName)
+                        .stockCode(stock.getCode())
+                        .stockName(stock.getName())
                         .title(n.getTitle())
-                        .contents(n.getContents())
-                        .url(n.getUrl())
+                        .contents(n.getContent())
+                        .url(n.getLink())
                         .build();
                     requests.add(emailRequest);
                 }
@@ -86,12 +99,9 @@ public class MailServiceImpl implements MailService, ApplicationListener<Context
             for (var r:requests) {
                 try {
                     MimeMessage message = createMessage(r);
-                    System.out.println("mailsender");
-                    System.out.println(mailSender);
                     mailSender.send(message);
                     log.info("[sendEmail] 인증 메일 전송을 성공했습니다.");
                 } catch(Exception e){
-                    System.out.println(e.getMessage());
                     log.info("[sendEmail] 인증 메일 전송을 실패했습니다.");
                     throw new ErrorException(EmailErrorCode.EMAIL_FAILED);
                 }

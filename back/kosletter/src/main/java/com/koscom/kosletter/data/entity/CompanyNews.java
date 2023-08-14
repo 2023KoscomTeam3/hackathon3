@@ -6,9 +6,10 @@ import javax.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 
+
 @Getter
 @Builder
-@Table(name = "company_news")
+//@Table(name = "company_news")
 public class CompanyNews {
     @Id
     private long id;
