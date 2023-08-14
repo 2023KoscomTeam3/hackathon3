@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import Vue from 'vue';
+
 export default {
     name : "cardRank",
     props : {
@@ -26,21 +28,18 @@ export default {
     },
     methods : {
       stockPlus(stock) {
-        console.log('click')
-        console.log(this.$el)
-        // console.log(this.stock.name)
-        // console.log(this.$event.target)
-        console.log(stock.name)
-        this.$axios.post("http://3.38.94.77/api/main/my-stock", {
-                  "memberId" : 1,
-                  "stockId" : stock.name,
-                })
-                .then(res => {
-                    console.log(res.data)
-                })
-                .catch(err =>   {
-                    console.log(err);
-                })
+        // console.log('click')
+        Vue.bus.$emit('eventA', stock);
+        // this.$axios.post("http://3.38.94.77/api/main/my-stock", {
+        //           "memberId" : 1,
+        //           "stockId" : stock.name,
+        //         })
+        //         .then(res => {
+        //             console.log(res.data)
+        //         })
+        //         .catch(err =>   {
+        //             console.log(err);
+        //         })
       }
     },
     created() {

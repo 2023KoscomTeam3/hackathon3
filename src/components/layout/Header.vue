@@ -2,7 +2,7 @@
     <div id="header">
         <img id="titleLogo" @click='goHome'  src="../../assets/kosletter.png"/>
         <div id="mypage">
-            <h2 @click='goAbout'> {{ username }}1111</h2>
+            <h2 @click='goAbout'> {{ username }}Admin</h2>
             <h3>220코인</h3>
             <b-button>코인 사용하기</b-button>
         </div>
