@@ -1,27 +1,30 @@
 <template>
     <div>
         <div id="padding"> </div>
+        <div id="cardTitleBox">
+            <h1 id="cardTitleText">MY STOCK</h1>
+        </div>
         <div class="box">
             <div class="c"> 
-                <div id="stockPhoto">
+                <div class="stockPhoto">
 
                 </div>
                 <div id="stockText">
-
+                    LG 에너지 솔루션
                 </div>
                 <b-button>삭제</b-button>
             </div>
             <div class="c"> 
-                <div id="stockPhoto">
+                <div class="stockPhoto">
 
                 </div>
                 <div id="stockText">
-
+                    SK하이닉스
                 </div>
                 <b-button>삭제</b-button>
             </div>
             <div class="c"> 
-                <div id="stockPhoto">
+                <div class="stockPhoto">
 
                 </div>
                 <div id="stockText">
@@ -32,7 +35,7 @@
         </div>
         <div class="box">
             <div class="c"> 
-                <div id="stockPhoto">
+                <div class="stockPhoto">
 
                 </div>
                 <div id="stockText">
@@ -41,7 +44,7 @@
                 <b-button>삭제</b-button>
             </div>
             <div class="c"> 
-                <div id="stockPhoto">
+                <div class="stockPhoto">
 
                 </div>
                 <div id="stockText">
@@ -50,7 +53,7 @@
                 <b-button>삭제</b-button>
             </div>
             <div class="c"> 
-                <div id="stockPhoto">
+                <div class="stockPhoto">
 
                 </div>
                 <div id="stockText">
@@ -86,21 +89,24 @@ export default {
     #myCard {
         height: 200px;
     }
+    #cardTitleBox {
+        height : 50px;
+        padding-top : 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
     #padding {
         height: 10px;
     }
-    #stockPhoto {
-        background-color: white;
-        height: 50%;
-    }
     #stockText {
-        background-color: grey;
         margin-top: 5px;
         margin-bottom: 5px;
         height: 50px;
+        text-align: center;
     }
     .box {
-        margin-top : 70px;
+        margin-top : 20px;
         margin-left : 10px;
         margin-right : 10px;
         margin-bottom : 30px;
@@ -126,5 +132,13 @@ export default {
     #c {
         height :100;
         background-color : #2c3e50
+    }
+    .stockPhoto {
+        background-color: white;
+        height: 50%;
+        background-image: url('../../assets/logo/samsung.png');
+        background-repeat: no-repeat;
+        background-size: contain; 
+        background-position: center; 
     }
 </style>

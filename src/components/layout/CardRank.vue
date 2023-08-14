@@ -10,7 +10,7 @@
               <h3 v-bind:text="stock.name">{{stock.id}}. {{stock.name}}</h3>
             </div>
             <div id="stockPlusBox">
-              <b-button id="stockPlus" v-on:click="stockPlus" target="li">추가</b-button>
+              <b-button id="stockPlus" @click="stockPlus">추가</b-button>
             </div>
           </div>
         </li>
@@ -27,6 +27,7 @@ export default {
     methods : {
       stockPlus() {
         console.log('click')
+        console.log(this.$el)
         // console.log(this.$event.target)
         // console.log(this.stock.name)
       }
