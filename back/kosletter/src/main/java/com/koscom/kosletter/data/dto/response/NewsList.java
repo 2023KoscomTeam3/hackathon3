@@ -5,7 +5,8 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class MemberIdResponse {
-    private long memberId;
-    private int coin;
+public class NewsList {
+    private String title;
+    private String contents;
+    private String url;
 }

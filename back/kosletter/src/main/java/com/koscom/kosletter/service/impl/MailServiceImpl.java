@@ -1,5 +1,6 @@
 package com.koscom.kosletter.service.impl;
 
+import com.koscom.kosletter.data.dto.response.NewsList;
 import com.koscom.kosletter.data.dto.response.SendEmailRequest;
 import com.koscom.kosletter.data.entity.Interest;
 import com.koscom.kosletter.data.entity.News;
@@ -19,8 +20,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,26 +40,28 @@ public class MailServiceImpl implements MailService {
 
         message.addRecipients(RecipientType.TO, request.getEmail());
         message.setSubject("제목");
-        String upUrl = "http://localhost:8080/api/mypage/up/" +
+        String upUrl = "http://ec2-3-38-94-77.ap-northeast-2.compute.amazonaws.com/api/mypage/up/" +
             request.getMemberId() + "/" + request.getStockCode();
-        String downUrl = "http://localhost:8080/api/mypage/down/" +
+        String downUrl = "http://ec2-3-38-94-77.ap-northeast-2.compute.amazonaws.com/api/mypage/down/" +
             request.getMemberId() + "/" + request.getStockCode();
         String msgg = "";
         msgg+= "<div style='margin:20px;'>";
         msgg+= "<h1> 안녕하세요 ";
-        msgg+= request.getName() + "님 ";
-        msgg+= "Kosletter 입니다. </h1>";
+        msgg+= request.getName() + "님 </h1>";
         msgg+= "<br>";
-        msgg+= "<center> ";
-        msgg+= request.getTitle() + "<center>";
-        msgg+= "<br>";
-        msgg+= "<p>" + request.getContents() + "</p>";
-        msgg+= "<p>감사합니다.<p>";
-        msgg+= "<br>";
-        msgg+= "<div align='center' style='border:1px solid black; font-family:verdana';>";
-        msgg+= "<a href=" + upUrl + ">" + "<button> 오른다 </button>" + "</a>";
-        msgg+= "<a href=" + downUrl + ">" + "<button> 내려간다 </button>" + "</a>";
-        msgg+= "<div style='font-size:130%'>";
+        for (var n:request.getNewsList()) {
+            msgg+= "<center> ";
+            msgg+= n.getTitle() + "</center>";
+            msgg+= "<br>";
+            msgg+= "<p>" + n.getContents() + "</p>";
+            msgg+= "<br>";
+            msgg+= "<a href=" + n.getUrl() + ">" + "링크로 가기</a><br>";
+            msgg+= "<hr>";
+        }
+        msgg+= "<div align='center';>";
+        msgg+= "<a href=" + upUrl + ">" + "<button style='color: white; background-color: red;'> 오른다 </button>" + "</a>";
+        msgg+= "<a href=" + downUrl + ">" + "<button style='color: white; background-color: blue;'> 내려간다 </button>" + "</a>";
+        msgg+= "</div>";
         msgg+= "</div>";
         message.setText(msgg, "utf-8", "html");//내용
         message.setFrom(new InternetAddress("kosletter@gmail.com","KOSLETTER"));//보내는 사람
@@ -79,19 +80,24 @@ public class MailServiceImpl implements MailService {
                 Stock stock = stockRepository.getById(stockId);
                 log.info("stock {}", stock.getCode());
                 List<News> news = newsRepository.findByCode(stock.getCode());
+                List<NewsList> newsList = new ArrayList<>();
                 for (var n:news) {
-                    SendEmailRequest emailRequest = SendEmailRequest.builder()
-                        .memberId(i.getMember().getId())
-                        .email(i.getMember().getEmail())
-                        .name(i.getMember().getNickname())
-                        .stockCode(stock.getCode())
-                        .stockName(stock.getName())
+                    NewsList list = NewsList.builder()
                         .title(n.getTitle())
-                        .contents(n.getContent())
+                        .contents(n.getSummary())
                         .url(n.getLink())
                         .build();
-                    requests.add(emailRequest);
+                    newsList.add(list);
                 }
+                SendEmailRequest emailRequest = SendEmailRequest.builder()
+                    .memberId(i.getMember().getId())
+                    .email(i.getMember().getEmail())
+                    .name(i.getMember().getNickname())
+                    .stockCode(stock.getCode())
+                    .stockName(stock.getName())
+                    .newsList(newsList)
+                    .build();
+                requests.add(emailRequest);
             }
         }
 
@@ -107,9 +113,5 @@ public class MailServiceImpl implements MailService {
                 }
             }
         }
-    }
-
-    public void send() {
-        sendMail();
     }
 }

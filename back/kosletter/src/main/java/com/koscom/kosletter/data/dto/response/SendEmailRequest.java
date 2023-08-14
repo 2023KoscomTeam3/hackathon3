@@ -1,5 +1,6 @@
 package com.koscom.kosletter.data.dto.response;
 
+import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -11,8 +12,6 @@ public class SendEmailRequest {
     private String name;
     private String stockCode;
     private String stockName;
-    private String title;
-    private String contents;
-    private String url;
+    List<NewsList> newsList;
 
 }

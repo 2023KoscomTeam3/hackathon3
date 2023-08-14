@@ -13,6 +13,5 @@ public class InterestStock {
     private long stockId;
     private String name;
     private String picture;
-    private String title;
 
 }

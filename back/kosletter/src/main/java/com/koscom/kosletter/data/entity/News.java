@@ -16,12 +16,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "company_news")
+@Table(name = "companys_news")
 public class News {
     @Id
     private long id;
     private String code;
     private String title;
-    private String content;
+    private String summary;
     private String link;
 }
