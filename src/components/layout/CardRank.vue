@@ -10,7 +10,7 @@
               <h3 v-bind:text="stock.name">{{stock.id}}. {{stock.name}}</h3>
             </div>
             <div id="stockPlusBox">
-              <b-button id="stockPlus" @click="stockPlus">추가</b-button>
+              <b-button id="stockPlus" @click="stockPlus(stock)" v-bind:key="stock">추가</b-button>
             </div>
           </div>
         </li>
@@ -25,11 +25,22 @@ export default {
       stockL : Array
     },
     methods : {
-      stockPlus() {
+      stockPlus(stock) {
         console.log('click')
         console.log(this.$el)
-        // console.log(this.$event.target)
         // console.log(this.stock.name)
+        // console.log(this.$event.target)
+        console.log(stock.name)
+        this.$axios.post("http://3.38.94.77/api/main/my-stock", {
+                  "memberId" : 1,
+                  "stockId" : stock.name,
+                })
+                .then(res => {
+                    console.log(res.data)
+                })
+                .catch(err =>   {
+                    console.log(err);
+                })
       }
     },
     created() {

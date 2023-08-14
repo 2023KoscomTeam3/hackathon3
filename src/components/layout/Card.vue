@@ -4,19 +4,19 @@
         <div class="box">
             <div class="c"> 
                 <div id="stockPhoto">
-
+                    <img id="photo" src="../../assets/logo/LG.png"/>
                 </div>
                 <div id="stockText">
-                    <h5>LG에너지솔루션</h5>
+                    <h5 id="stName">LG에너지솔루션</h5>
                 </div>
                 <b-button class="delete-b">삭제</b-button>
             </div>
             <div class="c"> 
                 <div id="stockPhoto">
-
+                    <img id="photo" src="../../assets/logo/sk-hynix.png"/>
                 </div>
                 <div id="stockText">
-                    <h5>SK하이닉스</h5>
+                    <h5 id="stName">SK하이닉스</h5>
                 </div>
                 <b-button class="delete-b">삭제</b-button>
             </div>
@@ -62,6 +62,8 @@
     </div>
 </template>
 
+
+
 <script>
 export default {
     name : "card",
@@ -93,12 +95,25 @@ export default {
     #stockPhoto {
         background-color: white;
         height: 50%;
+        overflow: hidden; 
+        display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50%;
+    overflow: hidden;
+        /* display: flex;
+    align-items: center;
+    justify-content: center; */
     }
     #stockText {
         background-color: grey;
         margin-top: 5px;
         margin-bottom: 5px;
         height: 50px;
+        display: flex;
+    align-items: center;
+    justify-content: center;
+        
     }
     .box {
         margin-top : 70px;
@@ -123,6 +138,7 @@ export default {
         padding-bottom: 5px;
         padding-left: 5px;
         padding-right: 5px;
+        border-radius: 10px;
         
     }
     #c {
@@ -132,5 +148,15 @@ export default {
     .delete-b{
         background-color : #ED6C1D
     }
-    
+    #photo {
+    /* width: 50px;
+    height: 50px; */
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+#stName {
+    color: #F4F2EB; /* 변경하고자 하는 글자 색상 */
+}
+
 </style>

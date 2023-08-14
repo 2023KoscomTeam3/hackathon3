@@ -41,7 +41,7 @@ export default {
                 {id:10, name : "포스코퓨처엠", logo : "../assets/posco.png"},
             ],
             myStockList : [
-                
+                2,3  
             ]
         };
     },
@@ -54,19 +54,23 @@ export default {
         },
     },
     created() {
-            console.log("startLoad")
-            this.$axios.get("http://3.38.94.77/api/main/my-stock-list" + "?memberId=1")
-                .then(res => {
-                    console.log(res.data)
-                    console.log(res.data.myStockList);
-                    this.myStockList = res.data.myStockList;
-                    console.log(this.myStockList.length)
-                    console.log(this.myStockList[0].name)
-                })
-                .catch(err =>   {
-                    console.log(err);
-                })
-            console.log("endLoad")
+            // console.log("startLoad")
+            // this.$axios.get("http://3.38.94.77/api/main/my-stock-list/" + "?memberId=1")
+            //     .then(res => {
+            //         // console.log(res.data)
+            //         console.log(res.data.myStockList);
+            //         // this.myStockList = res.data.myStockList;
+            //         // console.log(this.myStockList.length);
+            //         // console.log(this.myStockList[0].name);
+            //     })
+            //     .catch(err =>   {
+            //         console.log(err);
+            //     })
+            // console.log("endLoad")
+            // this.myStockList.append(2)
+            console.log(this.myStockList)
+            // sessionStorage.setItem("myStockList", this.myStockList);
+            // console.log(sessionStorage.getItem("myStockList"))
     }
 };
 </script>
