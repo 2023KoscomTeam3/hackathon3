@@ -37,7 +37,7 @@ export default {
   created() {
     console.log("1.sucessful");
     this.$axios
-      .get("http://3.38.94.77/api/mypage/success-rate" + "?memberId=1")
+      .get("http://3.38.94.77/api/mypage/success-rate" + "?memberId=2")
       .then((res) => {
         this.mystock = res.data.successRate;
         console.log(this.mystock);

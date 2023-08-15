@@ -23,8 +23,26 @@ export default {
   },
   methods: {
     login() {
-      sessionStorage.setItem('username',JSON.stringify(this.username));
-      this.$router.push('../Home');
+      if (this.username == "cubix4549@gmail.com" && this.password == '1234')  {
+        sessionStorage.setItem('username',JSON.stringify(this.username));
+        sessionStorage.setItem('password',JSON.stringify(this.password));
+        this.$router.push('../Home');
+      } else  {
+        alert('Login failed. Please check your credentials.');
+      }
+      // this.$axios.post("http://3.38.94.77/api/member/login", {
+      //     "email" : this.username,
+      //     "password" : this.password
+      //   })
+      //   .then((res) => {
+      //     console.log("res arrived")
+      //     console.log(res.data);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+        
+        
       // // 간단한 로그인 체크
       // if (this.username === 'username' && this.password === 'password') {
       //   alert('Login successful!');

@@ -58,6 +58,9 @@ export default {
     justify-content: flex-start;
     padding : 15px;
 }
+#titleLogo  {
+    height: 90%;
+}
 #mypage {
     width: 20%;
     margin-left: auto; /* 아이템을 오른쪽으로 밀어내기 위해 auto 마진 사용 */
