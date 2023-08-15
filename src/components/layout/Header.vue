@@ -2,9 +2,11 @@
     <div id="header">
         <img id="titleLogo" @click='goHome'  src="../../assets/kosletter.png"/>
         <div id="mypage">
-            <h2 @click='goAbout'> {{ username }}Admin</h2>
-            <h3>220코인</h3>
-            <b-button>코인 사용하기</b-button>
+            <h5 id='username' @click='goAbout'> {{username}} Admin</h5>
+            <div id="coin">
+                <h5>220코인</h5>
+                <b-button>코인 사용하기</b-button>
+            </div>
         </div>
     </div>
 </template>
@@ -45,7 +47,9 @@ export default {
     font-style: normal;
 }
 #header {
-    height : 150px;
+    height : 15%;
+    width: 100%;
+    border-radius: 5px 5px 0 0;
     background-color : #e5e3e1;
     display: flex;
     justify-content: flex-start;
@@ -53,6 +57,15 @@ export default {
 }
 #mypage {
     margin-left : 700px;
+    margin-left: auto; /* 아이템을 오른쪽으로 밀어내기 위해 auto 마진 사용 */
+    display: flex;
+    align-items: center; /* 수직 가운데 정렬 */
+}
+#username {
+    margin-right: 20px; /* h3 텍스트와 코인 박스 사이의 간격 조정 */
+}
+#coin {
+    align-items: center; /* 수직 가운데 정렬 */
 }
 
 </style>

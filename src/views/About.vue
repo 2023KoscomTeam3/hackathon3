@@ -1,15 +1,17 @@
 <template>
     <div>
-        <Header />
-        <div id="containerAbout">
-            <div id="sec1">
-                <SuccessRate />
-            </div>
-            <div id="sec2">
-                <History />
-            </div>
-            <div id="sec3">
-                <Rabbit />
+        <div id="aboutContainer">
+            <div class="homeContent">
+                <Header />
+                <div id="sec1">
+                    <SuccessRate />
+                </div>
+                <div id="sec2">
+                    <History />
+                </div>
+                <div id="sec3">
+                    <Rabbit />
+                </div>
             </div>
         </div>
     </div>
@@ -58,19 +60,33 @@ export default {
 </script>
 
 <style>
-#containerAbout {
+#aboutContainer {
+    width: 90vw; /* 90% of the viewport width */
+    height: 95vh; /* 90% of the viewport height */
+    border-radius: 10px;
+    background-color : white;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: stretch;
+    border: 5px solid #E5E3E1; /* Add this line to set border properties */
+}
+.homeContent {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap; /* 요소들을 줄 바꿈하여 배치 */
+    justify-content: space-between; /* 요소들 간격을 최대한 늘려서 배치 */
 }
 #sec1 {
     width: 30%;
+    box-sizing: border-box;
 }
 #sec2 {
     width: 40%;
+    box-sizing: border-box;
 }
 #sec3 {
     width: 30%;
+    box-sizing: border-box;
 }
 </style>

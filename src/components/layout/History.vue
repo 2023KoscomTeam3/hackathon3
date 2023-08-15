@@ -60,7 +60,7 @@ export default {
 
 <style scoped>
 #hisContainer {
-  padding-top: 50px;
+  padding-top: 10px;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -70,13 +70,13 @@ export default {
   background-color: white;
 }
 #hisBox {
-  height: 500px;
-  width: 330px;
+  height: 200px;
+  width: 100%;
   margin-bottom: 50px;
   padding: 5px;
 }
 #hisTextBox {
-  height: 70px;
+  height: 55px;
   margin-top: 10px;
   margin-left: 5px;
   margin-right: 5px;
@@ -84,6 +84,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-radius: 10px;
 }
 li {
   list-style: none;

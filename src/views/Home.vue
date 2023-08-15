@@ -1,11 +1,11 @@
 <template>
-    <div>
+    <div id="homeContainer">
         <Header />
-        <div>
-            <div id="section1">
+        <div class="homeContent">
+            <div class="section">
                 <Card />
             </div>
-            <div id="section2">
+            <div class="section" >
                 <CardRank v-bind:stockL="stockList" />
             </div>
         </div>
@@ -92,22 +92,26 @@ export default {
     font-weight: normal;
     font-style: normal;
 }
-#container {
-    width: 100%;
-    height: 100%;
+#homeContainer {
+    width: 90vw; /* 90% of the viewport width */
+    height: 95vh; /* 90% of the viewport height */
     border-radius: 10px;
-    background-color : red
+    background-color : white;
+    align-items: stretch; /* Stretch items to fit container width */
+    border: 5px solid #E5E3E1; /* Add this line to set border properties */
 }
-#section1 {
-    width: 50%;
-    float: left;
-    box-sizing: border-box;
-    flex : 1
+.homeContent {
+    display: flex;
+    flex-wrap: wrap; /* 요소들을 줄 바꿈하여 배치 */
+    justify-content: space-between; /* 요소들 간격을 최대한 늘려서 배치 */
 }
-#section2 {
-    width: 50%;
-    float: right;
+.section {
+    width: 50%; /* 각각의 섹션이 반씩 차지하도록 조정 */
     box-sizing: border-box;
-    padding : 10px;
+    padding: 10px;
+    margin-bottom: 20px; /* 아래 여백 추가 */
+}
+Card, CardRank {
+    height: 100%;
 }
 </style>

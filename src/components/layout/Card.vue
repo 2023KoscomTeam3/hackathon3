@@ -1,66 +1,68 @@
 <template>
     <div>
         <div id="padding"> </div>
-        <h1>MY STOCK</h1>
-        <div class="box">
-            <div class="c"> 
-                <div id="stockPhoto">
-                    <img id="photo" v-if = 'dynamicText[0]' :src="dynamicText[0].logo"/>
+        <h1 id="cardTitle">MY STOCK</h1>
+        <div id="cardSec">
+            <div class="box">
+                <div class="c"> 
+                    <div id="stockPhoto">
+                        <img id="photo" v-if = 'dynamicText[0]' :src="dynamicText[0].logo"/>
+                    </div>
+                    <div id="stockText">
+                        <h7 id="stName" v-if = 'dynamicText[0]'>{{dynamicText[0].name}}</h7>
+                        <!-- <h5 id="stName">LG에너지솔루션</h5> -->
+                    </div>
                 </div>
-                <div id="stockText">
-                    <h5 id="stName" v-if = 'dynamicText[0]'>{{dynamicText[0].name}}</h5>
-                    <!-- <h5 id="stName">LG에너지솔루션</h5> -->
+                <div class="c"> 
+                    <div id="stockPhoto">
+                        <img id="photo" v-if = 'dynamicText[1]' :src="dynamicText[1].logo" />
+                        <!-- <img id="photo" src="../../assets/logo/sk-hynix.png"/> -->
+                    </div>
+                    <div id="stockText">
+                        <h7 id="stName" v-if = 'dynamicText[1]'>{{dynamicText[1].name}}</h7>
+                        <!-- <h5 id="stName">SK하이닉스</h5> -->
+                    </div>
                 </div>
-            </div>
-            <div class="c"> 
-                <div id="stockPhoto">
-                    <img id="photo" v-if = 'dynamicText[1]' :src="dynamicText[1].logo" />
-                    <!-- <img id="photo" src="../../assets/logo/sk-hynix.png"/> -->
-                </div>
-                <div id="stockText">
-                    <h5 id="stName" v-if = 'dynamicText[1]'>{{dynamicText[1].name}}</h5>
-                    <!-- <h5 id="stName">SK하이닉스</h5> -->
-                </div>
-            </div>
-            <div class="c"> 
-                <div id="stockPhoto">
-                    <img id="photo" v-if = 'dynamicText[2]' :src="dynamicText[2].logo" />
-                </div>
-                <div id="stockText">
-                    <h5 id="stName" v-if = 'dynamicText[2]'>{{dynamicText[2].name}}</h5>
-                </div>
-            </div>
-        </div>
-
-        <div class="box">
-            <div class="c"> 
-                <div id="stockPhoto">
-                    <img id="photo" v-if = 'dynamicText[3]' :src="dynamicText[3].logo" />
-                </div>
-                <div id="stockText">
-                    <h5 id="stName" v-if = 'dynamicText[3]'>{{dynamicText[3].name}}</h5>
+                <div class="c"> 
+                    <div id="stockPhoto">
+                        <img id="photo" v-if = 'dynamicText[2]' :src="dynamicText[2].logo" />
+                    </div>
+                    <div id="stockText">
+                        <h7 id="stName" v-if = 'dynamicText[2]'>{{dynamicText[2].name}}</h7>
+                    </div>
                 </div>
             </div>
-            <div class="c"> 
-                <div id="stockPhoto">
-                    <img id="photo" v-if = 'dynamicText[4]' :src="dynamicText[4].logo" />
+    
+            <div class="box">
+                <div class="c"> 
+                    <div id="stockPhoto">
+                        <img id="photo" v-if = 'dynamicText[3]' :src="dynamicText[3].logo" />
+                    </div>
+                    <div id="stockText">
+                        <h7 id="stName" v-if = 'dynamicText[3]'>{{dynamicText[3].name}}</h7>
+                    </div>
                 </div>
-                <div id="stockText">
-                    <h5 id="stName" v-if = 'dynamicText[4]'>{{dynamicText[4].name}}</h5>
+                <div class="c"> 
+                    <div id="stockPhoto">
+                        <img id="photo" v-if = 'dynamicText[4]' :src="dynamicText[4].logo" />
+                    </div>
+                    <div id="stockText">
+                        <h7 id="stName" v-if = 'dynamicText[4]'>{{dynamicText[4].name}}</h7>
+                    </div>
+                </div>
+                <div class="c"> 
+                    <div id="stockPhoto">
+                        <img id="photo" v-if = 'dynamicText[5]' :src="dynamicText[5].logo" />
+                    </div>
+                    <div id="stockText">
+                        <h7 id="stName" v-if = 'dynamicText[5]'>{{dynamicText[5].name}}</h7>
+                    </div>
                 </div>
             </div>
-            <div class="c"> 
-                <div id="stockPhoto">
-                    <img id="photo" v-if = 'dynamicText[5]' :src="dynamicText[5].logo" />
-                </div>
-                <div id="stockText">
-                    <h5 id="stName" v-if = 'dynamicText[5]'>{{dynamicText[5].name}}</h5>
-                </div>
+            <div id="btnBox">
+                <b-button class="delete-b"> 업데이트 </b-button>
+                <b-button class="delete-b"  @click="resetStock">리셋</b-button>
             </div>
-        </div>
-        <div id="btnBox">
-            <b-button class="delete-b"> 업데이트 </b-button>
-            <b-button class="delete-b"  @click="resetStock">리셋</b-button>
         </div>
     </div>
 </template>
@@ -130,35 +132,39 @@ export default {
 
 <style scoped>
     #padding {
-        height: 10px;
+        padding: 2px;
+    }
+    #cardSec {
+        height: 100%;
+        background-color: white;
+        display: flex; /* 추가 */
+        flex-direction: column; /* 추가 */
     }
     #stockPhoto {
         background-color: white;
-        height: 70%;
+        height: 65%;
+        margin-top: 5px;
         overflow: hidden; 
         display: flex;
         align-items: center;
         justify-content: center;
         overflow: hidden;
-        /* display: flex;
-    align-items: center;
-    justify-content: center; */
     }
     #stockText {
         background-color: grey;
         margin-top: 5px;
         margin-bottom: 5px;
-        height: 27%;
+        height: 23%;
         display: flex;
         align-items: center;
         justify-content: center;
-        
+        flex-direction: column;
     }
     .box {
         margin-top : 20px;
         margin-left : 10px;
         margin-right : 10px;
-        margin-bottom : 30px;
+        margin-bottom : 10px;
         display: flex;
         flex-direction: row;
         justify-content: space-around;
@@ -166,28 +172,23 @@ export default {
         flex: 1;
     }
     .c {
-        width : 33%;
         flex: 1;
         box-sizing: border-box;
         background-color : #F4F2EB;
-        margin-left : 10px;
-        margin-right : 10px;
-        height: 200px;
-        padding-top: 5px;
-        padding-bottom: 5px;
+        height: 130px;
+        padding-top: 2px;
         padding-left: 5px;
         padding-right: 5px;
         border-radius: 10px;
-        
-    }
-    #c {
-        height :100;
-        background-color : #2c3e50
+        margin: 0 5px; /* 여기에 간격 값을 추가 */
+    
     }
     .delete-b{
         background-color : #ED6C1D;
         width: 100px;
+        margin-top: 10px;
         margin-left : 20px;
+        margin-bottom: 10px;
     }
     #photo {
     /* width: 50px;
@@ -198,7 +199,5 @@ export default {
     }
     #stName {
         color: #F4F2EB; /* 변경하고자 하는 글자 색상 */
-    }
-    #btnBox {
     }
 </style>

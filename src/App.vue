@@ -17,6 +17,10 @@ export default {
 <style>
 #app {
   text-align: center;
-  color: #2c3e50;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
 }
 </style>

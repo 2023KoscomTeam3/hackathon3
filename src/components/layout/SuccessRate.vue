@@ -48,7 +48,7 @@ export default {
 }
 
 .progress-container {
-  padding-top: 50px;
+  padding-top: 10px;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -65,6 +65,10 @@ export default {
 
 .progress-bar {
   width: 100%;
+}
+
+#hisTitle {
+  margin-bottom: 50px;
 }
 
 #app {
