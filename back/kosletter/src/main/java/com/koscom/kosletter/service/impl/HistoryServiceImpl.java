@@ -71,17 +71,19 @@ public class HistoryServiceImpl implements HistoryService {
                 MyHistory history = MyHistory.builder()
                     .historyId(h.getId())
                     .stockName(stock.getName())
-                    .correctness(h.getCorrect())
+                    .difPrice(h.getCorrect())
                     .date(h.getDate())
+                    .predictPrice(h.getVote())
                     .build();
                 myHistories.add(history);
             } else {
                 MyHistory history = MyHistory.builder()
                     .historyId(h.getId())
                     .stockName(stock.getName())
-                    .correctness(h.getCorrect())
+                    .difPrice(h.getCorrect())
                     .date(h.getDate())
                     .price(dailyPrice.getClose())
+                    .predictPrice(h.getVote())
                     .build();
                 myHistories.add(history);
             }
