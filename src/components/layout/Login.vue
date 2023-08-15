@@ -23,19 +23,13 @@ export default {
   },
   methods: {
     login() {
-      sessionStorage.setItem('username',JSON.stringify(this.username));
-      this.$router.push('../Home');
-      // // 간단한 로그인 체크
-      // if (this.username === 'username' && this.password === 'password') {
-      //   alert('Login successful!');
-      //    //페이지 이동
-      //  this.$router.push('../Home');
-      // } else {
-      //   alert('Login failed. Please check your credentials.');
-      //    //페이지 이동
-      //  this.$router.push('../Home');
-       
-      // }
+      if (this.username == "cubix98@naver.com" && this.password == '1234')  {
+        sessionStorage.setItem('username',JSON.stringify(this.username));
+        sessionStorage.setItem('password',JSON.stringify(this.password));
+        this.$router.push('../Home');
+      } else  {
+        alert('로그인에 실패하였습니다. 사용자 정보를 확인해주세요');
+      }
     },
   },
 };

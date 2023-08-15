@@ -60,7 +60,7 @@
                 </div>
             </div>
             <div id="btnBox">
-                <b-button class="delete-b"> 업데이트 </b-button>
+                <b-button class="delete-b"  @click="sendMail"> 업데이트 </b-button>
                 <b-button class="delete-b"  @click="resetStock">리셋</b-button>
             </div>
         </div>
@@ -77,24 +77,35 @@ export default {
     data()  {
         return {
             stack : 0,
-            dynamicText : [false,false,false,false,false,false]
+            dynamicText : [false,false,false,false,false,false],
+            username : JSON.parse(sessionStorage.getItem('username')),
+            password : JSON.parse(sessionStorage.getItem('password')),
         }
     },
     methods : {
-        resetStock() {
-        // 해당 인덱스의 dynamicText 요소 초기화 (null 또는 원하는 초기값으로 설정 가능)
-        for (var i=0; i<6; i++) {
-            this.$set(this.dynamicText, i, false);
-        }
-        // 변경된 dynamicText 데이터 세션 스토리지에 저장
-        this.stack = 0;
-        sessionStorage.setItem("dynamicText", JSON.stringify(this.dynamicText));
+        sendMail() {
+            console.log("sendMail Request")
+            this.$axios.post("http://3.38.94.77/api/member/login", {
+                    "email" : this.username,
+                    "password" : this.password
+                })
+                .then((res) => {
+                    console.log(res.data);
+                    alert("메일이 발송되였습니다")
+                })
+                .catch((err) => {
+                    console.log(err);
+                    alert("메일 발송에 실패하였습니다.")
+                });
         },
-        adjustImageSize(event) {
-            const img = event.target;
-            const container = img.parentNode;
-            container.style.height = img.clientHeight + "px";
-            container.style.width = img.clientWidth + "px";
+        resetStock() {
+            // 해당 인덱스의 dynamicText 요소 초기화 (null 또는 원하는 초기값으로 설정 가능)
+            for (var i=0; i<6; i++) {
+                this.$set(this.dynamicText, i, false);
+            }
+            // 변경된 dynamicText 데이터 세션 스토리지에 저장
+            this.stack = 0;
+            sessionStorage.setItem("dynamicText", JSON.stringify(this.dynamicText));
         },
     },
     created()   {
