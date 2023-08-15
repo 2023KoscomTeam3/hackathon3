@@ -2,10 +2,10 @@
     <div id="header">
         <img id="titleLogo" @click='goHome'  src="../../assets/kosletter.png"/>
         <div id="mypage">
-            <h5 id='username' @click='goAbout'> {{username}} Admin</h5>
+            <h5 id='username' @click='goAbout'> {{username}} </h5>
             <div id="coin">
-                <h5>220코인</h5>
-                <b-button>코인 사용하기</b-button>
+                <h6>220코인</h6>
+                <b-button id="coinUse">코인 사용하기</b-button>
             </div>
         </div>
     </div>
@@ -14,10 +14,10 @@
 <script>
 export default {
     name : "header",
-    props:['username'],//데이터받기
     data()  {
         return {
-            isHome : true
+            isHome : true,
+            username : ""
         }
     },
     methods : {
@@ -36,6 +36,9 @@ export default {
             }
         }
     },
+    created() {
+        this.username = JSON.parse(sessionStorage.getItem('username'));
+    }
 };
 </script>
 
@@ -56,7 +59,7 @@ export default {
     padding : 15px;
 }
 #mypage {
-    margin-left : 700px;
+    width: 20%;
     margin-left: auto; /* 아이템을 오른쪽으로 밀어내기 위해 auto 마진 사용 */
     display: flex;
     align-items: center; /* 수직 가운데 정렬 */
@@ -67,5 +70,9 @@ export default {
 #coin {
     align-items: center; /* 수직 가운데 정렬 */
 }
-
+#coinUse    {
+    height: 30px;
+    font-size: 12px;
+    text-align: center;
+}
 </style>

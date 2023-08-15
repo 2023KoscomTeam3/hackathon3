@@ -4,7 +4,7 @@
       <h2>성공률</h2>
     </div>
 
-    <Progress strokeColor="#ED6C1D" :value="20" >
+    <Progress strokeColor="#ED6C1D" :value="mystock" >
       <template v-slot:footer>
         <b>예측성공률 {{ mystock }} %</b>
       </template>

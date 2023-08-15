@@ -17,23 +17,25 @@
 export default {
   data() {
     return {
-      username: '1111',
-      password: '1111',
+      username: '',
+      password: '',
     };
   },
   methods: {
     login() {
-      // 간단한 로그인 체크
-      if (this.username === 'username' && this.password === 'password') {
-        alert('Login successful!');
-         //페이지 이동
-       this.$router.push('../Home');
-      } else {
-        alert('Login failed. Please check your credentials.');
-         //페이지 이동
-       this.$router.push('../Home');
+      sessionStorage.setItem('username',JSON.stringify(this.username));
+      this.$router.push('../Home');
+      // // 간단한 로그인 체크
+      // if (this.username === 'username' && this.password === 'password') {
+      //   alert('Login successful!');
+      //    //페이지 이동
+      //  this.$router.push('../Home');
+      // } else {
+      //   alert('Login failed. Please check your credentials.');
+      //    //페이지 이동
+      //  this.$router.push('../Home');
        
-      }
+      // }
     },
   },
 };
@@ -63,6 +65,7 @@ label {
 input {
   margin-bottom: 10px;
   padding: 5px;
+  width: 100%; 
 }
 button {
   background-color: #ED6C1D;
