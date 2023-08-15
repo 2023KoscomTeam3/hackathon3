@@ -44,7 +44,7 @@ export default {
   created() {
     console.log("2.history");
     this.$axios
-      .get("http://3.38.94.77/api/mypage/history" + "?memberId=1")
+      .get("http://3.38.94.77/api/mypage/history" + "?memberId=2")
       .then((res) => {
         this.dataArray = res.data.history;
         console.log(res.data.history);
