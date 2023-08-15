@@ -1,7 +1,6 @@
 <template>
   <div id="hisContainer">
     <div id="hisTitle">
-      <h2>History</h2>
     </div>
     <div id="hisBox">
       <li v-for="his in dataArray" :key="his.historyId">
@@ -56,6 +55,8 @@ export default {
         return "orangeBackground"; // Apply orange background class
       } else if (result === "실패") {
         return "grayBackground"; // Apply gray background class
+      }else if (result === "대기중") {
+        return "brownBackgraound"; // Apply gray background class
       }
       return ""; // No specific background class
     },
@@ -100,10 +101,11 @@ export default {
 }
 #hisTextBox {
   height: 60px;
-  margin-top: 10px;
+  width: 100%;
+  /* margin-top: 10px;
   margin-left: 100px;
-  margin-right: 100px;
-  padding: 30px;
+  margin-right: 100px; */
+  padding: 40px;
   /* background-color: #ed6c1d; */
   display: flex;
   justify-content: space-between;
@@ -122,10 +124,14 @@ li {
   list-style: none;
 }
 .orangeBackground {
-  background-color: orange; /* Apply orange background */
+  background-color: #F39A64;/* Apply orange background */
 }
 
 .grayBackground {
-  background-color: gray; /* Apply gray background */
+  background-color: #E5E3E1; /* Apply gray background */
 }
+.rownBackgraound{
+  background-color: #6C757D;
+}
+
 </style>
