@@ -68,4 +68,10 @@ button {
   padding: 10px;
   cursor: pointer;
 }
+#username {
+  width: 100%; 
+}
+#password {
+  width: 100%; 
+}
 </style>

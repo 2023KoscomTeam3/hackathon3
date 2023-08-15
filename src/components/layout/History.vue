@@ -34,16 +34,6 @@ export default {
   data() {
     return {
       dataArray: [],
-      //       {
-      //   "history": [
-      //     {
-      //       "historyId": 1,
-      //       "stockName": "삼성전자",
-      //       "difPrice": -400,
-      //       "date": "2023-08-08",
-      //       "price": 67600,
-      //       "predictPrice": 68000,
-      //       "result": "실패"
     };
   },
   methods: {
@@ -67,7 +57,7 @@ export default {
       .get("http://3.38.94.77/api/mypage/history" + "?memberId=2")
       .then((res) => {
         // 4개까지만 보여준다
-        this.dataArray = res.data.history.slice(0, 4);
+        this.dataArray = res.data.history
         console.log(res.data.history);
         // console.log(res.data.history[0].stockName);
       })
@@ -96,25 +86,29 @@ export default {
   height: 330px;
   width: 100%;
   margin-bottom: 50px;
-  padding: 5px;
+  padding: 3px;
   display: flex;
   flex-direction: column;
+  overflow: scroll;
 }
 #hisTextBox {
-  height: 25%;
   width: 100%;
-  padding: 50px;
-  /* background-color: #ed6c1d; */
+  padding: 10px;
+  margin-bottom: 8px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-radius: 10px;
 }
-.nameDate .results {
-  padding: 10px;
+#nameDate {
+    width: 20%;
+} 
+#results {
+    text-align: left;
 }
-.correct {
-  /* Add any additional styling you need for each section */
+#correct {
+    width: 20%;
 }
 li {
   list-style: none;
