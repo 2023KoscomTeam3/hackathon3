@@ -5,7 +5,7 @@
     </div>
     <div class="progress-wrapper">
       <Progress
-        :transitionDuration="1000"
+        :transitionDuration="1200"
         :radius="90"
         :strokeWidth="40"
         :value="mystock"
