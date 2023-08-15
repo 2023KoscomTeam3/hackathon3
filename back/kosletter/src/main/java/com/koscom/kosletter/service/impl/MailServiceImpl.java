@@ -51,7 +51,7 @@ public class MailServiceImpl implements MailService {
         String subject = request.getStockName() + " 뉴스레터가 도착했습니다.";
         message.setSubject(subject);
         //ec2-3-38-94-77.ap-northeast-2.compute.amazonaws.com
-        String url = "http://localhost:8080/api/mypage/vote/" + request.getMemberId() + "/" + request.getStockCode();
+        String url = "http://ec2-3-38-94-77.ap-northeast-2.compute.amazonaws.com/api/mypage/vote/" + request.getMemberId() + "/" + request.getStockCode();
         String msgg = "";
         msgg+= "<div style='margin:20px;'>";
         msgg+= "<h1> 안녕하세요 ";
