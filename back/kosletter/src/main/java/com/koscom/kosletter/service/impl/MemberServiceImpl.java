@@ -60,7 +60,7 @@ public class MemberServiceImpl implements MemberService {
             .coin(member.getCoin())
             .build();
 
-        mailService.sendMail();
+        mailService.sendNewsLetterMail();
         log.info("MemberServiceImpl log-in 완료 : {}", memberId.getMemberId());
         return memberId;
     }

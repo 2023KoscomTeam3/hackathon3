@@ -72,7 +72,7 @@ public class MailServiceImpl implements MailService {
         return message;
     }
     @Override
-    public void sendMail() {
+    public void sendNewsLetterMail() {
         log.info("[MailServiceImpl] sendMail");
         List<Interest> interests = interestRepository.findAll();
         List<SendEmailRequest> requests = new ArrayList<>();
