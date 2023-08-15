@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     login() {
-      if (this.username == "cubix4549@gmail.com" && this.password == '1234')  {
+      if (this.username == "cubix98@naver.com" && this.password == '1234')  {
         sessionStorage.setItem('username',JSON.stringify(this.username));
         sessionStorage.setItem('password',JSON.stringify(this.password));
         this.$router.push('../Home');
