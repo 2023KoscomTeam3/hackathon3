@@ -11,7 +11,7 @@
             <SuccessRate />
           </div>
         </div>
-        <div class="section">
+        <div id="hisSection" class="section">
           <div class="section-title">
             <h2>History</h2>
           </div>
@@ -102,17 +102,16 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 0 100px 0;
   border: 5px solid #e5e3e1;
   border-radius: 30px;
-  margin: 0 0 50px 0;
 }
 .contentBox {
+  flex: 1; /* 아이템 높이를 확장 */  
   justify-content: space-around;
   align-items: stretch;
   border: 5px solid #e5e3e1;
   border-radius: 30px;
   margin: 10px;
-  height: 85%;
+  height: 78%;
 }
 </style>

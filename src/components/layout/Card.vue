@@ -60,7 +60,7 @@
                 </div>
             </div>
             <div id="btnBox">
-                <b-button class="delete-b"  @click="sendMail"> 업데이트 </b-button>
+                <b-button class="delete-b"  @click="sendMail"> 발송하기 </b-button>
                 <b-button class="delete-b"  @click="resetStock">리셋</b-button>
             </div>
         </div>

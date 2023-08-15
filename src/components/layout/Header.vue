@@ -59,15 +59,20 @@ export default {
     padding : 15px;
 }
 #mypage {
-    width: 20%;
+    width: 30%;
     margin-left: auto; /* 아이템을 오른쪽으로 밀어내기 위해 auto 마진 사용 */
     display: flex;
     align-items: center; /* 수직 가운데 정렬 */
 }
 #username {
+    width: 75%;
     margin-right: 20px; /* h3 텍스트와 코인 박스 사이의 간격 조정 */
+    display: flex;
+    justify-content: flex-end; /* 변경된 부분: 오른쪽 정렬로 수정 */
+    align-items: center;
 }
 #coin {
+    width: 35%;
     align-items: center; /* 수직 가운데 정렬 */
 }
 #coinUse    {

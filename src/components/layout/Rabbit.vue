@@ -16,7 +16,7 @@ export default {
 
 <style scoped>
 #rabContainer {
-  padding-top: 80px;
+  padding-top: 50px;
   padding-left: 20px;
   padding-right: 20px;
   display: flex;

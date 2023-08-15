@@ -64,9 +64,10 @@ export default {
   created() {
     console.log("2.history");
     this.$axios
-      .get("http://3.38.94.77/api/mypage/history" + "?memberId=1")
+      .get("http://3.38.94.77/api/mypage/history" + "?memberId=2")
       .then((res) => {
-        this.dataArray = res.data.history;
+        // 4개까지만 보여준다
+        this.dataArray = res.data.history.slice(0, 4);
         console.log(res.data.history);
         // console.log(res.data.history[0].stockName);
       })
@@ -75,12 +76,14 @@ export default {
       });
     this.logHistoryData();
   },
+
 };
 </script>
 
 <style scoped>
 #hisContainer {
-  padding-top: 10px;
+  width: 100%;
+  padding-top: 5px;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -89,33 +92,26 @@ export default {
 #hisTitle {
   background-color: white;
 }
-
 #hisBox {
-  height: 200px;
+  height: 330px;
   width: 100%;
   margin-bottom: 50px;
   padding: 5px;
   display: flex;
   flex-direction: column;
-  gap: 20px; /* Adjust the gap as needed */
 }
 #hisTextBox {
-  height: 60px;
+  height: 25%;
   width: 100%;
-  /* margin-top: 10px;
-  margin-left: 100px;
-  margin-right: 100px; */
-  padding: 40px;
+  padding: 50px;
   /* background-color: #ed6c1d; */
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-radius: 10px;
-  gap: 10px; /* Adjust the gap as needed */
 }
 .nameDate .results {
-  padding: 30px;
-  margin-top: 100px;
+  padding: 10px;
 }
 .correct {
   /* Add any additional styling you need for each section */
@@ -130,8 +126,8 @@ li {
 .grayBackground {
   background-color: #E5E3E1; /* Apply gray background */
 }
-.rownBackgraound{
-  background-color: #6C757D;
+.brownBackgraound{
+  background-color: #ffe4b5;
 }
 
 </style>
