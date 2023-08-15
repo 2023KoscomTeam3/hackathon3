@@ -1,10 +1,13 @@
 package com.koscom.kosletter.service.impl;
 
 import com.koscom.kosletter.data.dto.response.NewsList;
-import com.koscom.kosletter.data.dto.response.SendEmailRequest;
+import com.koscom.kosletter.data.dto.response.SendEmailResponse;
+import com.koscom.kosletter.data.dto.response.SendResearchResponse;
+import com.koscom.kosletter.data.entity.CompanyResearch;
 import com.koscom.kosletter.data.entity.Interest;
 import com.koscom.kosletter.data.entity.News;
 import com.koscom.kosletter.data.entity.Stock;
+import com.koscom.kosletter.data.repository.CompanyResearchRepository;
 import com.koscom.kosletter.data.repository.InterestRepository;
 import com.koscom.kosletter.data.repository.NewsRepository;
 import com.koscom.kosletter.data.repository.StockRepository;
@@ -21,6 +24,7 @@ import javax.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,8 +37,9 @@ public class MailServiceImpl implements MailService {
     private final InterestRepository interestRepository;
     private final NewsRepository newsRepository;
     private final StockRepository stockRepository;
+    private final CompanyResearchRepository companyResearchRepository;
 
-    private MimeMessage createMessage(SendEmailRequest request) throws MessagingException, UnsupportedEncodingException {
+    private MimeMessage createNewsLetterMessage(SendEmailResponse request) throws MessagingException, UnsupportedEncodingException {
         log.info("[MailServiceImpl] createMessage");
         MimeMessage message = mailSender.createMimeMessage();
 
@@ -73,9 +78,9 @@ public class MailServiceImpl implements MailService {
     }
     @Override
     public void sendNewsLetterMail() {
-        log.info("[MailServiceImpl] sendMail");
+        log.info("[MailServiceImpl] sendNewsLetterMail");
         List<Interest> interests = interestRepository.findAll();
-        List<SendEmailRequest> requests = new ArrayList<>();
+        List<SendEmailResponse> requests = new ArrayList<>();
         if(interests != null || !interests.isEmpty()) {
             for (var i:interests) {
                 log.info("id {}", i.getStock());
@@ -92,7 +97,7 @@ public class MailServiceImpl implements MailService {
                         .build();
                     newsList.add(list);
                 }
-                SendEmailRequest emailRequest = SendEmailRequest.builder()
+                SendEmailResponse emailRequest = SendEmailResponse.builder()
                     .memberId(i.getMember().getId())
                     .email(i.getMember().getEmail())
                     .name(i.getMember().getNickname())
@@ -107,14 +112,91 @@ public class MailServiceImpl implements MailService {
         if(!requests.isEmpty() || requests != null) {
             for (var r:requests) {
                 try {
-                    MimeMessage message = createMessage(r);
+                    MimeMessage message = createNewsLetterMessage(r);
                     mailSender.send(message);
-                    log.info("[sendEmail] 인증 메일 전송을 성공했습니다.");
+                    log.info("[sendEmail] 뉴스 레터 전송을 성공했습니다.");
                 } catch(Exception e){
-                    log.info("[sendEmail] 인증 메일 전송을 실패했습니다.");
+                    log.info("[sendEmail] 뉴스 레터 전송을 실패했습니다.");
                     throw new ErrorException(EmailErrorCode.EMAIL_FAILED);
                 }
             }
         }
+    }
+
+    private MimeMessage createResearchMessage(SendResearchResponse response) throws MessagingException, UnsupportedEncodingException {
+        log.info("[MailServiceImpl] createMessage");
+        MimeMessage message = mailSender.createMimeMessage();
+
+        message.addRecipients(RecipientType.TO, response.getEmail());
+        String subject = response.getStockName() + " 리서치 뉴스가 도착했습니다.";
+        message.setSubject(subject);
+
+        String msgg = "";
+        msgg+= "<div style='margin:20px;'>";
+        msgg+= "<h1> 안녕하세요 ";
+        msgg+= response.getName() + "님 </h1>";
+        msgg+= "<br>";
+        msgg+= "<div style='padding:15px; background-color: #F5F5F5;'>";
+
+        msgg+= "<center><h3> 투표 통계 </h3></center>";
+        msgg+= "<img src=\"data:image/png;base64," + response.getStatImg() + "/>";
+        msgg+= "<hr>";
+
+        msgg+= "<center><h3> 딥러닝 예측치 </h3></center>";
+        msgg+= "<img src=\"data:image/png;base64," + response.getPredImg() + "/>";
+        msgg+= "<hr>";
+
+        msgg+= "<center><h3> 정리 표 </h3></center>";
+        msgg+= "<img src=\"data:image/png;base64," + response.getTableImg() + "/>";
+        msgg+= "<hr>";
+
+        msgg+= "</div></div>";
+
+        message.setText(msgg, "utf-8", "html");//내용
+        message.setFrom(new InternetAddress("kosletter@gmail.com","KOSLETTER"));//보내는 사람
+
+        return message;
+    }
+
+    @Override
+//    @Scheduled(cron = "0 * * * * *")
+    public void sendResearchMail() {
+        log.info("[MailServiceImpl] sendResearchMail");
+        List<Interest> interests = interestRepository.getByMember_Id(1);
+        List<SendResearchResponse> responses = new ArrayList<>();
+        if(interests != null || !interests.isEmpty()) {
+            for (var i:interests) {
+                log.info("id {}", i.getStock());
+                long stockId = i.getStock();
+                Stock stock = stockRepository.getById(stockId);
+                log.info("stock {}", stock.getCode());
+                CompanyResearch companyResearch = companyResearchRepository.getByCode(stock.getCode());
+
+                SendResearchResponse response = SendResearchResponse.builder()
+                    .memberId(i.getMember().getId())
+                    .email(i.getMember().getEmail())
+                    .name(i.getMember().getNickname())
+                    .stockCode(stock.getCode())
+                    .stockName(stock.getName())
+                    .statImg(companyResearch.getStatImg())
+                    .predImg(companyResearch.getPredImg())
+                    .tableImg(companyResearch.getTableImg())
+                    .build();
+                responses.add(response);
+            }
+        }
+
+//        if(!responses.isEmpty() || responses != null) {
+//            for (var r:responses) {
+//                try {
+//                    MimeMessage message = createResearchMessage(r);
+//                    mailSender.send(message);
+//                    log.info("[sendEmail] 인증 메일 전송을 성공했습니다.");
+//                } catch(Exception e){
+//                    log.info("[sendEmail] 인증 메일 전송을 실패했습니다.");
+//                    throw new ErrorException(EmailErrorCode.EMAIL_FAILED);
+//                }
+//            }
+//        }
     }
 }

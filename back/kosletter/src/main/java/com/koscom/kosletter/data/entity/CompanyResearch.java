@@ -1,6 +1,5 @@
 package com.koscom.kosletter.data.entity;
 
-import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -14,12 +13,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "top50_daily_price")
-public class DailyPrice {
+@Table(name = "company_research")
+public class CompanyResearch {
     @Id
     private long id;
     private String code;
-    private String company;
-    private LocalDate date;
-    private Long close;
+    private String statImg;
+    private String predImg;
+    private String tableImg;
 }
