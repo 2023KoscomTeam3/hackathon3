@@ -1,25 +1,15 @@
 <template>
-   <div class="progress-container">
+  <div class="progress-container">
     <div id="hisTitle">
-      
+      <h2>성공률</h2>
     </div>
-    <div class="progress-wrapper">
-      <Progress
-        :transitionDuration="1000"
-        :radius="90"
-        :strokeWidth="40"
-        :value="mystock"
-        strokeColor="#ED6C1D"
-      >
-        <template v-slot:footer>
-           <div class="success-text">
-          <b>예측성공률 {{ mystock }} %</b>
-           </div>
-        </template>
-      </Progress>
-    </div>
-  </div>
 
+    <Progress strokeColor="#ED6C1D" :value="mystock" >
+      <template v-slot:footer>
+        <b>예측성공률 {{ mystock }} %</b>
+      </template>
+    </Progress>
+  </div>
 </template>
 
 <script>
@@ -55,8 +45,6 @@ export default {
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  width: 200px; /* 원하는 너비로 조절 */
-  height: 200px; /* 원하는 높이로 조절 */
 }
 
 .progress-container {
@@ -65,7 +53,6 @@ export default {
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  flex-direction: column; /* 중요: 컨테이너를 세로로 배치 */
 }
 
 .progress-wrapper {
@@ -73,7 +60,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 100px;
 }
 
 .progress-bar {
@@ -100,14 +87,4 @@ body {
   margin: 0;
   padding: 0;
 }
-.success-text {
-  text-align: center;
-  margin-top: 10px; /* 원하는 여백 조절 */
-}
-/* #sec1 {
-  justify-content: space-around;
-  align-items: stretch;
-  border: 5px solid #e5e3e1;
-  border-radius: 10px;
-} */
 </style>
