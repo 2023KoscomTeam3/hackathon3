@@ -12,6 +12,7 @@ public class SendEmailResponse {
     private String name;
     private String stockCode;
     private String stockName;
+    private long price;
     List<NewsList> newsList;
 
 }
