@@ -1,72 +1,91 @@
 <template>
-    <div id="hisContainer">
-        <div id="hisTitle">
-            <h2>History</h2>
-        </div>
-        <div id="hisBox">
-            <li v-for="his in this.history_List" v-bind:key="his.name">
-                <div id="hisTextBox">
-                    <h5>{{his.name}}</h5>
-                    <div>
-                        <h5>{{his.result}}</h5>
-                        <h8>{{his.date}}</h8>
-                    </div>
-                </div>
-            </li>
-        </div>
+  <div id="hisContainer">
+    <div id="hisTitle">
+      <h2>History</h2>
     </div>
+    <div id="hisBox">
+      <li v-for="his in dataArray" :key="his.historyId">
+        <div id="hisTextBox">
+          <h5>{{ his.stockName }}</h5>
+          <div>
+            <h5>{{ his.correctness }}</h5>
+            <h8>{{ his.date }}</h8>
+            <h5>{{ his.price }}</h5>
+          </div>
+        </div>
+      </li>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-    name : "history",
-    data() {
-        return {
-            history_List : [
-                {name: "삼성전자", result: "성공", date:'2023.08.01' },
-                {name: "삼성전자", result: "성공", date:'2023.08.01' },
-                {name: "삼성전자", result: "성공", date:'2023.08.01' },
-                {name: "삼성전자", result: "성공", date:'2023.08.01' },
-            ]
-        };
-    },
-    method : {
+  name: "history",
+  data() {
+    return {
+      dataArray: [],
 
+      //   history_List: [
+      // {
+      //       "historyId": 1,
+      //       "stockName": "삼성전자",
+      //       "correctness": "정답",
+      //       "date": "2023-08-08"
+      //        "price": 67600
+      // }
+      //   ],
+    };
+  },
+  method: {
+    logHistoryData() {
+      console.log(this.dataArray);
     },
-    created() {
-        
-    }
+  },
+  created() {
+    console.log("2.history");
+    this.$axios
+      .get("http://3.38.94.77/api/mypage/history" + "?memberId=1")
+      .then((res) => {
+        this.dataArray = res.data.history;
+        console.log(res.data.history);
+        // console.log(res.data.history[0].stockName);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    this.logHistoryData();
+  },
 };
 </script>
 
 <style scoped>
-    #hisContainer { 
-        padding-top: 50px;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        align-items: center;
-    }
-    #hisTitle {
-        background-color: white;
-    }
-    #hisBox {
-        height: 500px;
-        width: 330px;
-        margin-bottom: 50px;
-        padding: 5px;
-    }
-    #hisTextBox {
-        height: 70px;
-        margin-top: 10px;
-        margin-left: 5px;
-        margin-right: 5px;
-        background-color: #E5E3E1;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    li{
-        list-style:none;
-    }
+#hisContainer {
+  padding-top: 50px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+#hisTitle {
+  background-color: white;
+}
+#hisBox {
+  height: 500px;
+  width: 330px;
+  margin-bottom: 50px;
+  padding: 5px;
+}
+#hisTextBox {
+  height: 70px;
+  margin-top: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  background-color: #e5e3e1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+li {
+  list-style: none;
+}
 </style>

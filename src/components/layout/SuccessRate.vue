@@ -1,32 +1,27 @@
 <template>
-  <div class="circle-progress">
-    <div class="progress-container">
-      <div id="hisTitle">
-        <h2>성공률</h2>
-      </div>
-      <div class="progress-wrapper">
-        <div class="progress">
-          <div
-            class="progress-bar"
-            role="progressbar"
-            :style="`width: ${mystock}%`"
-            :aria-valuenow="mystock"
-            aria-valuemin="0"
-            aria-valuemax="100"
-          >
-            {{ mystock }}%
-          </div>
-        </div>
-      </div>
+  <div class="progress-container">
+    <div id="hisTitle">
+      <h2>성공률</h2>
     </div>
+
+    <Progress strokeColor="#ED6C1D" :value="20" >
+      <template v-slot:footer>
+        <b>예측성공률 {{ mystock }} %</b>
+      </template>
+    </Progress>
   </div>
 </template>
 
 <script>
+import Progress from "easy-circular-progress";
 export default {
+  name: "app",
+  components: {
+    Progress,
+  },
   data() {
     return {
-      mystock: 30, // 초기값
+      mystock: 0, // 초기값
     };
   },
   created() {
@@ -46,7 +41,6 @@ export default {
 
 <style scoped>
 .circle-progress {
-  padding-top: 50px;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -54,7 +48,9 @@ export default {
 }
 
 .progress-container {
+  padding-top: 50px;
   display: flex;
+  justify-content: center;
   flex-direction: column;
   align-items: center;
 }
@@ -63,9 +59,28 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px; /* 원하는 여백 값으로 조정 */
+  justify-content: center;
+  margin-top: 100px;
 }
 
 .progress-bar {
+  width: 100%;
+}
+
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  height: 100vh;
+  color: #fff;
+  background: #3e423a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body {
+  margin: 0;
+  padding: 0;
 }
 </style>
