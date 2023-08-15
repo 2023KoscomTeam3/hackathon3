@@ -12,7 +12,6 @@ public interface HistoryService {
 
     RankListResponse getRanking();
 
-    void saveUp(long memberId, String stockCode);
+    void save(long memberId, String stockCode, int predictValue);
 
-    void saveDown(long memberId, String stockCode);
 }

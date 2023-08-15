@@ -66,24 +66,28 @@ public class HistoryServiceImpl implements HistoryService {
 
         for (var h:histories) {
             Stock stock = stockRepository.getById(h.getStock());
-            String correct = "";
-            if(h.getCorrect() == 0) {
-                correct = "판별 전";
-            } else if (h.getCorrect() == 1) {
-                correct = "오답";
-            } else if (h.getCorrect() == 2) {
-                correct = "정답";
+            DailyPrice dailyPrice = dailyPriceRepository.findByCompanyAndDate(stock.getName(), h.getDate());
+            if(LocalDate.now().compareTo(h.getDate()) < 0) {
+                MyHistory history = MyHistory.builder()
+                    .historyId(h.getId())
+                    .stockName(stock.getName())
+                    .correctness(h.getCorrect())
+                    .date(h.getDate())
+                    .build();
+                myHistories.add(history);
+            } else {
+                MyHistory history = MyHistory.builder()
+                    .historyId(h.getId())
+                    .stockName(stock.getName())
+                    .correctness(h.getCorrect())
+                    .date(h.getDate())
+                    .price(dailyPrice.getClose())
+                    .build();
+                myHistories.add(history);
             }
 
-            MyHistory history = MyHistory.builder()
-                .historyId(h.getId())
-                .stockName(stock.getName())
-                .correctness(correct)
-                .date(h.getDate())
-                .build();
-
-            myHistories.add(history);
         }
+
         MyHistoryListResponse response = MyHistoryListResponse.builder()
             .history(myHistories)
             .build();
@@ -111,7 +115,7 @@ public class HistoryServiceImpl implements HistoryService {
     }
 
     @Override
-    public void saveUp(long memberId, String stockCode) {
+    public void save(long memberId, String stockCode, int predictValue) {
         log.info("[HistoryServiceImpl] saveUp: {}, {}", memberId, stockCode);
         Member member = common.getMember(memberId);
         Stock stock = stockRepository.getByCode(stockCode);
@@ -119,29 +123,9 @@ public class HistoryServiceImpl implements HistoryService {
             History history = History.builder()
                 .member(member)
                 .stock(stock.getId())
-                .vote(1)
+                .vote(predictValue)
                 .date(LocalDate.now())
                 .build();
-            historyRepository.save(history);
-        } else {
-            throw new ErrorException(EmailErrorCode.EMAIL_CONFLICT);
-        }
-    }
-
-    @Override
-    public void saveDown(long memberId, String stockCode) {
-        log.info("[HistoryServiceImpl] saveDown: {}, {}", memberId, stockCode);
-        Member member = common.getMember(memberId);
-        Stock stock = stockRepository.getByCode(stockCode);
-
-        if(!historyRepository.existsByMember_IdAndStockAndDate(memberId, stock.getId(), LocalDate.now())) {
-            History history = History.builder()
-                .member(member)
-                .stock(stock.getId())
-                .vote(0)
-                .date(LocalDate.now())
-                .build();
-    
             historyRepository.save(history);
         } else {
             throw new ErrorException(EmailErrorCode.EMAIL_CONFLICT);
@@ -151,28 +135,19 @@ public class HistoryServiceImpl implements HistoryService {
     @Scheduled(cron = "0 0 16 * * *")
     public void doJudgement() {
         log.info("[HistoryImpl] doJudgement");
-        List<History> histories = historyRepository.getByDateAndCorrect(LocalDate.now().minusDays(1), 0);
+        List<History> histories = historyRepository.getByDateAndCorrectIsNull(LocalDate.now().minusDays(1));
 
         if (histories != null || !histories.isEmpty()) {
             for (var h:histories) {
                 String company = stockRepository.getById(h.getStock()).getName();
                 log.info("company name {}", company);
-                List<DailyPrice> dailyPrices = dailyPriceRepository.findTop2ByCompanyOrderByDateDesc(company);
-                if(dailyPrices.get(0).getDate().compareTo(LocalDate.now()) == 0) {
-                    if(dailyPrices.get(0).getClose() > dailyPrices.get(1).getClose()) {
-                        if(h.getVote() == 1) {
-                            h.setCorrect(2);
-                            h.getMember().setCoin(h.getMember().getCoin() + 10);
-                        } else if (h.getVote() == 0) {
-                            h.setCorrect(1);
-                        }
-                    } else if (dailyPrices.get(0).getClose() <= dailyPrices.get(1).getClose()) {
-                        if(h.getVote() == 1) {
-                            h.setCorrect(1);
-                        } else if (h.getVote() == 0) {
-                            h.setCorrect(2);
-                            h.getMember().setCoin(h.getMember().getCoin() + 10);
-                        }
+
+                DailyPrice dailyPrice = dailyPriceRepository.findTopByCompanyOrderByDateDesc(company);
+                if(dailyPrice.getDate().compareTo(h.getDate()) > 0) {
+                    int diff = (int) (dailyPrice.getClose() - h.getVote());
+                    h.setCorrect(diff);
+                    if(diff == 0) {
+                        h.getMember().setCoin(h.getMember().getCoin() + 10);
                     }
                 }
             }

@@ -27,14 +27,12 @@ public class History {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(nullable = false)
-    private int vote;
+    private long vote;
     @Column(nullable = false)
     private LocalDate date;
-    @Column(columnDefinition="tinyint(1)")
+    @Column(columnDefinition="tinyint(1) default 0")
     private boolean correctness;
-    //맞으면 2, 틀리면 1
-    @ColumnDefault("0")
-    private int correct;
+    private Integer correct;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;

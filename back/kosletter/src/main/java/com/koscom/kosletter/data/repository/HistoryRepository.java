@@ -12,10 +12,10 @@ public interface HistoryRepository extends JpaRepository<History, Long> {
     @Query("select count(h.member) from History h where h.member.id=:memberId")
     int getHistoryCountByMemberId(@Param("memberId") long memberId);
 
-    @Query("select count(h.member) from History h where h.member.id=:memberId and h.correct=2")
+    @Query("select count(h.member) from History h where h.member.id=:memberId and h.correct=0")
     int getHistoryCorrectCountByMemberId(long memberId);
 
-    List<History> getByDateAndCorrect(LocalDate date, int correct);
+    List<History> getByDateAndCorrectIsNull(LocalDate date);
 
     List<History> getByMember_Id(long id);
     boolean existsByMember_IdAndStockAndDate(long memberId, long stockId, LocalDate date);
