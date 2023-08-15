@@ -77,7 +77,7 @@ export default {
 <style>
 #aboutContainer {
   width: 90vw; /* 90% of the viewport width */
-  height: 90vh; /* 90% of the viewport height */
+  height: 95vh; /* 90% of the viewport height */
   border-radius: 10px;
   background-color: white;
   display: flex;
@@ -105,7 +105,7 @@ export default {
   margin: 0 0 100px 0;
   border: 5px solid #e5e3e1;
   border-radius: 30px;
-  margin: 10px;
+  margin: 0 0 50px 0;
 }
 .contentBox {
   justify-content: space-around;
@@ -113,6 +113,6 @@ export default {
   border: 5px solid #e5e3e1;
   border-radius: 30px;
   margin: 10px;
-  height: 90%;
+  height: 85%;
 }
 </style>
