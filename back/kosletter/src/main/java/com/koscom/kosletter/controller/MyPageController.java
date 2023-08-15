@@ -49,21 +49,22 @@ public class MyPageController {
             .body(body);
     }
 
-    @GetMapping ("/up/{member-id}/{stock-code}")
-    public ResponseEntity<String> postVoteUp(@PathVariable("member-id") long memberId,
-        @PathVariable("stock-code") String stockCode) {
+//    @GetMapping ("/{member-id}/{stock-code}/{predict-price}")
+//    public ResponseEntity<String> postVoteUp(@PathVariable("member-id") long memberId,
+//        @PathVariable("stock-code") String stockCode, @PathVariable("predict-price") int predictPrice) {
+//        log.info("[MyPageController] 상승 투표");
+//        historyService.saveUp(memberId, stockCode);
+//        return ResponseEntity.ok()
+//            .body("응답이 성공적으로 제출되었습니다.");
+//    }
+
+    @GetMapping ("/vote/{member-id}/{stock-code}")
+    public ResponseEntity<String> postVote(@PathVariable("member-id") long memberId,
+        @PathVariable("stock-code") String stockCode, @RequestParam("predict-value") int predictPrice) {
         log.info("[MyPageController] 상승 투표");
-        historyService.saveUp(memberId, stockCode);
+        historyService.save(memberId, stockCode, predictPrice);
         return ResponseEntity.ok()
             .body("응답이 성공적으로 제출되었습니다.");
     }
 
-    @GetMapping("/down/{member-id}/{stock-code}")
-    public ResponseEntity<String> postVoteDown(@PathVariable("member-id") long memberId,
-        @PathVariable("stock-code") String stockCode) {
-        log.info("[MyPageController] 하강 투표");
-        historyService.saveDown(memberId, stockCode);
-        return ResponseEntity.ok()
-            .body("응답이 성공적으로 제출되었습니다.");
-    }
 }

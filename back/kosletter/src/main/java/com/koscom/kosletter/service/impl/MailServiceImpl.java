@@ -39,30 +39,33 @@ public class MailServiceImpl implements MailService {
         MimeMessage message = mailSender.createMimeMessage();
 
         message.addRecipients(RecipientType.TO, request.getEmail());
-        message.setSubject("제목");
-        String upUrl = "http://ec2-3-38-94-77.ap-northeast-2.compute.amazonaws.com/api/mypage/up/" +
-            request.getMemberId() + "/" + request.getStockCode();
-        String downUrl = "http://ec2-3-38-94-77.ap-northeast-2.compute.amazonaws.com/api/mypage/down/" +
-            request.getMemberId() + "/" + request.getStockCode();
+        String subject = request.getStockName() + " 뉴스레터가 도착했습니다.";
+        message.setSubject(subject);
+        String url = "http://ec2-3-38-94-77.ap-northeast-2.compute.amazonaws.com/api/mypage/vote/" + request.getMemberId() + "/" + request.getStockCode();
         String msgg = "";
         msgg+= "<div style='margin:20px;'>";
         msgg+= "<h1> 안녕하세요 ";
         msgg+= request.getName() + "님 </h1>";
         msgg+= "<br>";
+        msgg+= "<div style='padding:15px; background-color: #F5F5F5;'>";
         for (var n:request.getNewsList()) {
-            msgg+= "<center> ";
-            msgg+= n.getTitle() + "</center>";
-            msgg+= "<br>";
+            msgg+= "<center><h3> ";
+            msgg+= n.getTitle() + "</h3></center>";
             msgg+= "<p>" + n.getContents() + "</p>";
             msgg+= "<br>";
-            msgg+= "<a href=" + n.getUrl() + ">" + "링크로 가기</a><br>";
+            msgg+= "<a href=" + n.getUrl() + "><center>" + "링크로 가기</center></a><br>";
             msgg+= "<hr>";
         }
-        msgg+= "<div align='center';>";
-        msgg+= "<a href=" + upUrl + ">" + "<button style='color: white; background-color: red;'> 오른다 </button>" + "</a>";
-        msgg+= "<a href=" + downUrl + ">" + "<button style='color: white; background-color: blue;'> 내려간다 </button>" + "</a>";
-        msgg+= "</div>";
-        msgg+= "</div>";
+        msgg+= "<div style='padding:5px;' align='center';>";
+        msgg+="<p> 예측 가격을 입력해주세요</p>";
+        msgg+="<form action=\"" + url + "\"method=\"get\""
+            +"<input type=\"hidden\" name=\"stock-code\" value=\"" + request.getStockCode() + "\">"
+            +"<label for=\"predictValue\">Predict Value: </label>"
+            +"<input type=\"number\" id=\"predictValue\" name=\"predict-value\">"
+            +"<input type=\"submit\" value=\"Submit\">"
+            +"</form>";
+        msgg+= "</div></div></div>";
+
         message.setText(msgg, "utf-8", "html");//내용
         message.setFrom(new InternetAddress("kosletter@gmail.com","KOSLETTER"));//보내는 사람
 
