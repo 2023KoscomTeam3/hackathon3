@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       stockList: [
-        { id: 1, name: "삼성전자" },
+        { id: 1, name: "삼성전" },
         { id: 2, name: "LG에너지솔루션" },
         { id: 3, name: "SK하이닉스" },
         { id: 4, name: "삼성바이오로직스" },
