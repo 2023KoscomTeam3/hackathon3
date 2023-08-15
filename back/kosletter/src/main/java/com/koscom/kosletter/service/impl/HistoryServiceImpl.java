@@ -69,7 +69,7 @@ public class HistoryServiceImpl implements HistoryService {
             DailyPrice dailyPrice = dailyPriceRepository.findByCompanyAndDate(stock.getName(), h.getDate());
             String result = "";
 
-            if(LocalDate.now().compareTo(h.getDate()) < 0) {
+            if(LocalDate.now().compareTo(h.getDate()) <= 0) {
                 result = "대기중";
                 MyHistory history = MyHistory.builder()
                     .historyId(h.getId())

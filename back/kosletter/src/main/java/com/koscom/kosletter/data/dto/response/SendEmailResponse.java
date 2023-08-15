@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class SendEmailRequest {
+public class SendEmailResponse {
     private long memberId;
     private String email;
     private String name;
