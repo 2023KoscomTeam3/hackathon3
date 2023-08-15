@@ -2,5 +2,5 @@ package com.koscom.kosletter.service;
 
 public interface MailService {
     void sendNewsLetterMail();
-    void sendResearchMail();
+    void sendResearchMail(long memberId);
 }
