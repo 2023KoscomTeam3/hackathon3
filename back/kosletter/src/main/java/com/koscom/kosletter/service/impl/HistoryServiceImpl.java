@@ -61,7 +61,7 @@ public class HistoryServiceImpl implements HistoryService {
     public MyHistoryListResponse getHistory(long memberId) {
         Member member = common.getMember(memberId);
 
-        List<History> histories = historyRepository.getByMember_Id(member.getId());
+        List<History> histories = historyRepository.getByMember_IdOrderByDateDesc(member.getId());
         List<MyHistory> myHistories = new ArrayList<>();
 
         for (var h:histories) {

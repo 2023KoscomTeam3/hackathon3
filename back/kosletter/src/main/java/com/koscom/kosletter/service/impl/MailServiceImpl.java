@@ -24,6 +24,7 @@ import javax.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,6 +47,7 @@ public class MailServiceImpl implements MailService {
         message.addRecipients(RecipientType.TO, request.getEmail());
         String subject = request.getStockName() + " 뉴스레터가 도착했습니다.";
         message.setSubject(subject);
+        //ec2-3-38-94-77.ap-northeast-2.compute.amazonaws.com
         String url = "http://ec2-3-38-94-77.ap-northeast-2.compute.amazonaws.com/api/mypage/vote/" + request.getMemberId() + "/" + request.getStockCode();
         String msgg = "";
         msgg+= "<div style='margin:20px;'>";
@@ -77,6 +79,7 @@ public class MailServiceImpl implements MailService {
         return message;
     }
     @Override
+    @Async
     public void sendNewsLetterMail() {
         log.info("[MailServiceImpl] sendNewsLetterMail");
         List<Interest> interests = interestRepository.findAll();
@@ -131,26 +134,26 @@ public class MailServiceImpl implements MailService {
         String subject = response.getStockName() + " 리서치 뉴스가 도착했습니다.";
         message.setSubject(subject);
 
-        String msgg = "";
+        String msgg = "<html><body>";
         msgg+= "<div style='margin:20px;'>";
         msgg+= "<h1> 안녕하세요 ";
         msgg+= response.getName() + "님 </h1>";
         msgg+= "<br>";
-        msgg+= "<div style='padding:15px; background-color: #F5F5F5;'>";
+        msgg+= "<div style='padding:15px; background-color: #F5F5F5; text-align: center;'>";
 
         msgg+= "<center><h3> 투표 통계 </h3></center>";
-        msgg+= "<img src=\"data:image/png;base64," + response.getStatImg() + "/>";
+        msgg+= "<img src=\"data:image/png;base64," + response.getStatImg() + "\"/>";
         msgg+= "<hr>";
 
         msgg+= "<center><h3> 딥러닝 예측치 </h3></center>";
-        msgg+= "<img src=\"data:image/png;base64," + response.getPredImg() + "/>";
+        msgg+= "<img src=\"data:image/jpeg;base64," + response.getPredImg() + "\"/>";
         msgg+= "<hr>";
 
         msgg+= "<center><h3> 정리 표 </h3></center>";
-        msgg+= "<img src=\"data:image/png;base64," + response.getTableImg() + "/>";
+        msgg+= "<img src=\"data:image/jpeg;base64," + response.getTableImg() + "\"/>";
         msgg+= "<hr>";
 
-        msgg+= "</div></div>";
+        msgg+= "</div></div></body></html>";
 
         message.setText(msgg, "utf-8", "html");//내용
         message.setFrom(new InternetAddress("kosletter@gmail.com","KOSLETTER"));//보내는 사람
@@ -159,10 +162,10 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-//    @Scheduled(cron = "0 * * * * *")
-    public void sendResearchMail() {
+    @Async
+    public void sendResearchMail(long memberId) {
         log.info("[MailServiceImpl] sendResearchMail");
-        List<Interest> interests = interestRepository.getByMember_Id(1);
+        List<Interest> interests = interestRepository.getByMember_Id(memberId);
         List<SendResearchResponse> responses = new ArrayList<>();
         if(interests != null || !interests.isEmpty()) {
             for (var i:interests) {
@@ -172,31 +175,33 @@ public class MailServiceImpl implements MailService {
                 log.info("stock {}", stock.getCode());
                 CompanyResearch companyResearch = companyResearchRepository.getByCode(stock.getCode());
 
-                SendResearchResponse response = SendResearchResponse.builder()
-                    .memberId(i.getMember().getId())
-                    .email(i.getMember().getEmail())
-                    .name(i.getMember().getNickname())
-                    .stockCode(stock.getCode())
-                    .stockName(stock.getName())
-                    .statImg(companyResearch.getStatImg())
-                    .predImg(companyResearch.getPredImg())
-                    .tableImg(companyResearch.getTableImg())
-                    .build();
-                responses.add(response);
+                if(companyResearch != null) {
+                    SendResearchResponse response = SendResearchResponse.builder()
+                        .memberId(i.getMember().getId())
+                        .email(i.getMember().getEmail())
+                        .name(i.getMember().getNickname())
+                        .stockCode(stock.getCode())
+                        .stockName(stock.getName())
+                        .statImg(companyResearch.getStatImg())
+                        .predImg(companyResearch.getPredImg())
+                        .tableImg(companyResearch.getTableImg())
+                        .build();
+                    responses.add(response);
+                }
             }
         }
 
-//        if(!responses.isEmpty() || responses != null) {
-//            for (var r:responses) {
-//                try {
-//                    MimeMessage message = createResearchMessage(r);
-//                    mailSender.send(message);
-//                    log.info("[sendEmail] 인증 메일 전송을 성공했습니다.");
-//                } catch(Exception e){
-//                    log.info("[sendEmail] 인증 메일 전송을 실패했습니다.");
-//                    throw new ErrorException(EmailErrorCode.EMAIL_FAILED);
-//                }
-//            }
-//        }
+        if(!responses.isEmpty() || responses != null) {
+            for (var r:responses) {
+                try {
+                    MimeMessage message = createResearchMessage(r);
+                    mailSender.send(message);
+                    log.info("[sendEmail] 인증 메일 전송을 성공했습니다.");
+                } catch(Exception e){
+                    log.info("[sendEmail] 인증 메일 전송을 실패했습니다.");
+                    throw new ErrorException(EmailErrorCode.EMAIL_FAILED);
+                }
+            }
+        }
     }
 }

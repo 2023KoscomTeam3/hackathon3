@@ -17,7 +17,7 @@ public interface HistoryRepository extends JpaRepository<History, Long> {
 
     List<History> getByDateAndCorrectIsNull(LocalDate date);
 
-    List<History> getByMember_Id(long id);
+    List<History> getByMember_IdOrderByDateDesc(long id);
     boolean existsByMember_IdAndStockAndDate(long memberId, long stockId, LocalDate date);
   
 }

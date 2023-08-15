@@ -5,6 +5,7 @@ import com.koscom.kosletter.data.dto.response.MyHistoryListResponse;
 import com.koscom.kosletter.data.dto.response.RankListResponse;
 import com.koscom.kosletter.data.dto.response.SuccessRateResponse;
 import com.koscom.kosletter.service.HistoryService;
+import com.koscom.kosletter.service.MailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class MyPageController {
     private final HistoryService historyService;
+    private final MailService mailService;
+
     @GetMapping("/success-rate")
     public ResponseEntity<SuccessRateResponse> getSuccessRate(@RequestParam("memberId") long memberId) {
         log.info("[MyPageController] 성공률 조회");
@@ -49,20 +52,13 @@ public class MyPageController {
             .body(body);
     }
 
-//    @GetMapping ("/{member-id}/{stock-code}/{predict-price}")
-//    public ResponseEntity<String> postVoteUp(@PathVariable("member-id") long memberId,
-//        @PathVariable("stock-code") String stockCode, @PathVariable("predict-price") int predictPrice) {
-//        log.info("[MyPageController] 상승 투표");
-//        historyService.saveUp(memberId, stockCode);
-//        return ResponseEntity.ok()
-//            .body("응답이 성공적으로 제출되었습니다.");
-//    }
-
     @GetMapping ("/vote/{member-id}/{stock-code}")
     public ResponseEntity<String> postVote(@PathVariable("member-id") long memberId,
         @PathVariable("stock-code") String stockCode, @RequestParam("predict-value") int predictPrice) {
         log.info("[MyPageController] 상승 투표");
         historyService.save(memberId, stockCode, predictPrice);
+        mailService.sendResearchMail(memberId);
+
         return ResponseEntity.ok()
             .body("응답이 성공적으로 제출되었습니다.");
     }
