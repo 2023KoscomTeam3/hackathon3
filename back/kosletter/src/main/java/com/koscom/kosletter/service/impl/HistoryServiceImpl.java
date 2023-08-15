@@ -130,17 +130,14 @@ public class HistoryServiceImpl implements HistoryService {
         log.info("[HistoryServiceImpl] saveUp: {}, {}", memberId, stockCode);
         Member member = common.getMember(memberId);
         Stock stock = stockRepository.getByCode(stockCode);
-        if(!historyRepository.existsByMember_IdAndStockAndDate(memberId, stock.getId(), LocalDate.now())) {
-            History history = History.builder()
-                .member(member)
-                .stock(stock.getId())
-                .vote(predictValue)
-                .date(LocalDate.now())
-                .build();
-            historyRepository.save(history);
-        } else {
-            throw new ErrorException(EmailErrorCode.EMAIL_CONFLICT);
-        }
+
+        History history = History.builder()
+            .member(member)
+            .stock(stock.getId())
+            .vote(predictValue)
+            .date(LocalDate.now())
+            .build();
+        historyRepository.save(history);
     }
 
     @Scheduled(cron = "0 0 16 * * *")
@@ -165,6 +162,5 @@ public class HistoryServiceImpl implements HistoryService {
         }
 
     }
-
 
 }
