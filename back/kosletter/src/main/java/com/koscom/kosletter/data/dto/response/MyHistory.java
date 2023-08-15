@@ -13,5 +13,6 @@ public class MyHistory {
     private LocalDate date;
     private long price;
     private long predictPrice;
+    private String result;
 
 }

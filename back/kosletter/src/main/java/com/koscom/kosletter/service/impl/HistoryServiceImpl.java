@@ -67,16 +67,25 @@ public class HistoryServiceImpl implements HistoryService {
         for (var h:histories) {
             Stock stock = stockRepository.getById(h.getStock());
             DailyPrice dailyPrice = dailyPriceRepository.findByCompanyAndDate(stock.getName(), h.getDate());
+            String result = "";
+
             if(LocalDate.now().compareTo(h.getDate()) < 0) {
+                result = "대기중";
                 MyHistory history = MyHistory.builder()
                     .historyId(h.getId())
                     .stockName(stock.getName())
                     .difPrice(h.getCorrect())
                     .date(h.getDate())
                     .predictPrice(h.getVote())
+                    .result(result)
                     .build();
                 myHistories.add(history);
             } else {
+                if (h.getCorrect() == 0) {
+                    result = "성공";
+                } else {
+                    result = "실패";
+                }
                 MyHistory history = MyHistory.builder()
                     .historyId(h.getId())
                     .stockName(stock.getName())
@@ -84,10 +93,10 @@ public class HistoryServiceImpl implements HistoryService {
                     .date(h.getDate())
                     .price(dailyPrice.getClose())
                     .predictPrice(h.getVote())
+                    .result(result)
                     .build();
                 myHistories.add(history);
             }
-
         }
 
         MyHistoryListResponse response = MyHistoryListResponse.builder()
